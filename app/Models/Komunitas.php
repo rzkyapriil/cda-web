@@ -2,23 +2,25 @@
 
 namespace App\Models;
 
-use App\Http\Requests\UserLoginRequest;
-use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Komunitas extends Model
 {
-    protected $table = "users";
+    protected $table = "komunitas";
     protected $primaryKey = "id";
     protected $keyType = "int";
     public $timestamps = true;
     public $incrementing = true;
 
     protected $fillable = [
-        'username',
-        'password',
-        'name'
+        'mitra',
+        'nama_pic',
+        'no_tlp',
+        'email',
+        'alamat',
+        'jenis_usaha',
+        'keterangan',
+        'jenis_komunitas',
     ];
 }

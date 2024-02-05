@@ -2,23 +2,19 @@
 
 namespace App\Models;
 
-use App\Http\Requests\UserLoginRequest;
-use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class Pertanyaan extends Model
 {
-    protected $table = "users";
+    protected $table = "pertanyaan";
     protected $primaryKey = "id";
     protected $keyType = "int";
     public $timestamps = true;
     public $incrementing = true;
 
     protected $fillable = [
-        'username',
-        'password',
-        'name'
+        'pertanyaan',
     ];
 }
