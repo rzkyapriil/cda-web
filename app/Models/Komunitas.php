@@ -14,6 +14,7 @@ class Komunitas extends Model
     public $incrementing = true;
 
     protected $fillable = [
+        'komunitas_id',
         'mitra',
         'nama_pic',
         'no_tlp',

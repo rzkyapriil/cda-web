@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Fakultas;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FakultasController extends Controller
 {
     public function index()
     {
-        $fakultas = Fakultas::select('*')->get();
+        $fakultas = Fakultas::select('*')->paginate(10);
         return view('admin.data_fakultas', compact('fakultas'));
     }
 
@@ -25,20 +26,20 @@ class FakultasController extends Controller
 
     public function edit(Request $request)
     {
-        // $user = Auth::user();
-        // $daerah = Daerah::where('id', $request->id)->first();
+        $user = Auth::user();
+        $fakultas = Fakultas::where('id', $request->id)->first();
 
-        // return view('admin.edit_daerah', compact('user', 'daerah'));
+        return view('admin.edit_fakultas', compact('user', 'fakultas'));
     }
 
     public function update(Request $request)
     {
-        // $daerah = Daerah::where('id', $request->id);
-        // $daerah->update([
-        //     'nama_daerah' => $request->nama_daerah,
-        // ]);
+        $fakultas = Fakultas::where('id', $request->id);
+        $fakultas->update([
+            'nama_fakultas' => $request->nama_fakultas,
+        ]);
 
-        // return redirect()->route('admin.daerah')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('admin.fakultas')->with('success', 'data berhasil diperbaharui');
     }
     public function delete(Request $request)
     {
@@ -49,5 +50,12 @@ class FakultasController extends Controller
         } catch (QueryException $e) {
             return redirect()->back()->with('errors', 'Data sudah berelasi dengan data lain!');
         }
+    }
+
+    public function cari(Request $request)
+    {
+        $fakultas = Fakultas::select('*')->where('nama_fakultas', 'LIKE', "%$request->cari%")->paginate(10);
+
+        return view('admin.data_fakultas', compact('fakultas'));
     }
 }

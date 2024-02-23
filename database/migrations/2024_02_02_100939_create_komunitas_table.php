@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('komunitas', function (Blueprint $table) {
             $table->id();
+            $table->string('komunitas_id', 20)->nullable(false);
             $table->string('mitra', 200)->nullable(false);
             $table->string('nama_pic', 200)->nullable(false);
             $table->string('no_tlp', 20)->nullable(false);

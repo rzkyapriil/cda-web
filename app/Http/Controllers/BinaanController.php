@@ -8,6 +8,7 @@ use App\Models\Fakultas;
 use App\Models\JurusanBinaan;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BinaanController extends Controller
 {
@@ -16,7 +17,13 @@ class BinaanController extends Controller
         $fakultas = Fakultas::select('*')->get();
         $jurusan_binaan = JurusanBinaan::select('*')->get();
         $area_kampus = AreaKampus::select('*')->get();
-        $binaan = Binaan::join('fakultas', 'binaan.fakultas_id', 'fakultas.id')->join('jurusan_binaan', 'binaan.jurusan_binaan_id', 'jurusan_binaan.id')->join('area_kampus', 'binaan.area_kampus_id', 'area_kampus.id')->select('binaan.*', 'fakultas.nama_fakultas', 'jurusan_binaan.nama_jurusan_binaan', 'area_kampus.nama_area_kampus')->get();
+        $binaan = Binaan::join('fakultas', 'binaan.fakultas_id', 'fakultas.id')
+            ->join('jurusan_binaan', 'binaan.jurusan_binaan_id', 'jurusan_binaan.id')
+            ->join('area_kampus', 'binaan.area_kampus_id', 'area_kampus.id')
+            ->select('binaan.*', 'fakultas.nama_fakultas', 'jurusan_binaan.nama_jurusan_binaan', 'area_kampus.nama_area_kampus')
+            ->orderBy('fakultas.nama_fakultas')
+            ->orderBy('jurusan_binaan.nama_jurusan_binaan')
+            ->paginate(10);
         return view('admin.data_binaan', compact('binaan', 'fakultas', 'jurusan_binaan', 'area_kampus'));
     }
 
@@ -34,21 +41,28 @@ class BinaanController extends Controller
 
     public function edit(Request $request)
     {
-        // $user = Auth::user();
-        // $daerah = Daerah::where('id', $request->id)->first();
+        $user = Auth::user();
+        $binaan = Binaan::where('id', $request->id)->first();
+        $fakultas = Fakultas::select('*')->get();
+        $jurusan_binaan = JurusanBinaan::select('*')->get();
+        $area_kampus = AreaKampus::select('*')->get();
 
-        // return view('admin.edit_daerah', compact('user', 'daerah'));
+        return view('admin.edit_binaan', compact('user', 'binaan', 'fakultas', 'jurusan_binaan', 'area_kampus'));
     }
 
     public function update(Request $request)
     {
-        // $daerah = Daerah::where('id', $request->id);
-        // $daerah->update([
-        //     'nama_daerah' => $request->nama_daerah,
-        // ]);
+        $binaan = Binaan::where('id', $request->id);
+        $binaan->update([
+            'fakultas_id' => $request->fakultas_id,
+            'jurusan_binaan_id' => $request->jurusan_binaan_id,
+            'program_binaan' => $request->program_binaan,
+            'area_kampus_id' => $request->area_kampus_id,
+        ]);
 
-        // return redirect()->route('admin.daerah')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('admin.binaan')->with('success', 'data berhasil diperbaharui');
     }
+
     public function delete(Request $request)
     {
         try {
@@ -58,5 +72,24 @@ class BinaanController extends Controller
         } catch (QueryException $e) {
             return redirect()->back()->with('errors', 'Data sudah berelasi dengan data lain!');
         }
+    }
+
+    public function cari(Request $request)
+    {
+        $fakultas = Fakultas::select('*')->get();
+        $jurusan_binaan = JurusanBinaan::select('*')->get();
+        $area_kampus = AreaKampus::select('*')->get();
+        $binaan = Binaan::join('fakultas', 'binaan.fakultas_id', 'fakultas.id')
+            ->join('jurusan_binaan', 'binaan.jurusan_binaan_id', 'jurusan_binaan.id')
+            ->join('area_kampus', 'binaan.area_kampus_id', 'area_kampus.id')
+            ->select('binaan.*', 'fakultas.nama_fakultas', 'jurusan_binaan.nama_jurusan_binaan', 'area_kampus.nama_area_kampus')
+            ->orderBy('fakultas.nama_fakultas')
+            ->orderBy('jurusan_binaan.nama_jurusan_binaan')
+            ->where('fakultas.nama_fakultas', 'LIKE', "%$request->cari%")
+            ->orWhere('jurusan_binaan.nama_jurusan_binaan', 'LIKE', "%$request->cari%")
+            ->orWhere('area_kampus.nama_area_kampus', 'LIKE', "%$request->cari%")
+            ->paginate(10);
+
+        return view('admin.data_binaan', compact('binaan', 'fakultas', 'jurusan_binaan', 'area_kampus'));
     }
 }

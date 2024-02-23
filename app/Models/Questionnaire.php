@@ -8,12 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Questionnaire extends Model
 {
-    // $table->unsignedBigInteger('komunitas_id')->nullable(false);
-    //         $table->unsignedBigInteger('dosen_id')->nullable(false);
-    //         $table->string('anon_user', 20)->nullable(false);
-    //         $table->unsignedBigInteger('pertanyaan_id')->nullable(false);
-    //         $table->enum('jawaban', [1, 2, 3, 4, 5, 6])->nullable(false);
-
     protected $table = "questionnaire";
     protected $primaryKey = "id";
     protected $keyType = "int";
@@ -22,12 +16,17 @@ class Questionnaire extends Model
 
     protected $fillable = [
         'tanggal_pelaksanaan',
-        'komunitas_id',
+        'pelatihan_id',
         'dosen_id',
         'anon_user',
         'pertanyaan_id',
         'jawaban',
     ];
+
+    public function pelatihan(): HasMany
+    {
+        return $this->hasMany(Pelatihan::class, 'pelatihan_id', 'id');
+    }
 
     public function pertanyaan(): HasMany
     {
