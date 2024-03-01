@@ -18,10 +18,19 @@ Route::get('/terima-kasih', [\App\Http\Controllers\HomeController::class, 'terim
 
 Route::get('/questionnaire', [\App\Http\Controllers\HomeController::class, 'questionnaire'])->name('questionnaire');
 Route::post('/questionnaire', [\App\Http\Controllers\QuestionnaireController::class, 'create'])->name('create-questionnaire');
+
+Route::get('/form-pelatihan', [\App\Http\Controllers\FormPelatihanController::class, 'index'])->name('form-pelatihan.index');
+Route::post('/form-pelatihan', [\App\Http\Controllers\FormPelatihanController::class, 'store'])->name('form-pelatihan.store');
+
+Route::get('/form-komunitas', [\App\Http\Controllers\FormKomunitasController::class, 'index'])->name('form-komunitas.index');
+Route::post('/form-komunitas', [\App\Http\Controllers\FormKomunitasController::class, 'store'])->name('form-komunitas.store');
+
 Route::post('/login', [\App\Http\Controllers\UserAuthController::class, 'login'])->name('users.login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard/filter', [\App\Http\Controllers\AdminController::class, 'filter'])->name('admin.filter-dashboard');
+    Route::get('/admin/dashboard/export', [\App\Http\Controllers\AdminController::class, 'export'])->name('admin.export-dashboard');
 
     Route::get('/admin/dosen', [\App\Http\Controllers\DosenController::class, 'index'])->name('admin.dosen');
     Route::post('/admin/dosen', [\App\Http\Controllers\DosenController::class, 'create'])->name('admin.create-dosen');

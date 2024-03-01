@@ -17,6 +17,7 @@ class Questionnaire extends Model
     protected $fillable = [
         'tanggal_pelaksanaan',
         'pelatihan_id',
+        'komunitas_id',
         'dosen_id',
         'anon_user',
         'pertanyaan_id',
@@ -26,6 +27,11 @@ class Questionnaire extends Model
     public function pelatihan(): HasMany
     {
         return $this->hasMany(Pelatihan::class, 'pelatihan_id', 'id');
+    }
+
+    public function komunitas(): HasMany
+    {
+        return $this->hasMany(Komunitas::class, 'komunitas_id', 'id');
     }
 
     public function pertanyaan(): HasMany

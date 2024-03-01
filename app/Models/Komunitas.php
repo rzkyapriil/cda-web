@@ -15,6 +15,7 @@ class Komunitas extends Model
 
     protected $fillable = [
         'komunitas_id',
+        'jenis_umkm',
         'mitra',
         'nama_pic',
         'no_tlp',
@@ -23,5 +24,6 @@ class Komunitas extends Model
         'jenis_usaha',
         'keterangan',
         'jenis_komunitas',
+        'alokasi_site'
     ];
 }

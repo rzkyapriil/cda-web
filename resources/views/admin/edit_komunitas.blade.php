@@ -17,6 +17,12 @@
             </div>
 
             <div>
+                <label for="jenis_umkm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis UMKM
+                </label>
+                <input type="text" id="jenis_umkm" name="jenis_umkm" placeholder="jenis umkm" value="{{ $komunitas->jenis_umkm }}" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+
+            <div>
                 <label for="mitra" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mitra
                 </label>
                 <input type="text" id="mitra" name="mitra" placeholder="mitra" value="{{ $komunitas->mitra }}" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
@@ -64,6 +70,12 @@
                 <label for="keterangan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan
                 </label>
                 <input type="text" id="keterangan" name="keterangan" placeholder="keterangan" value="{{ $komunitas->keterangan }}" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+
+            <div>
+                <label for="alokasi_site" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alokasi Site
+                </label>
+                <input type="text" id="alokasi_site" name="alokasi_site" placeholder="alokasi site" value="{{ $komunitas->alokasi_site }}" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
 
 

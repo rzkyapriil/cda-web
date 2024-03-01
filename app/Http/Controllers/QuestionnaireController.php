@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Komentar;
 use App\Models\Pertanyaan;
 use App\Models\Questionnaire;
 use Carbon\Carbon;
@@ -10,17 +11,13 @@ use Termwind\Components\Dd;
 
 class QuestionnaireController extends Controller
 {
-
-
     public function index()
     {
-
         return view('questionnaire');
     }
 
     public function create(Request $request)
     {
-
         $pertanyaan = Pertanyaan::select('*')->get();
         $user_unique = QuestionnaireController::randomString(16);
         $check_user = Questionnaire::where('anon_user', $user_unique)->first();
@@ -29,27 +26,22 @@ class QuestionnaireController extends Controller
             $user_unique = QuestionnaireController::randomString(16);
         }
 
-        // Membuat objek Carbon dari string tanggal dengan format 'dd/mm/yyyy'
-        $date = Carbon::createFromFormat('d/m/Y', $request->tanggal_pelaksanaan);
-
-        // Memformat kembali tanggal ke format 'yyyy/mm/dd'
-        $tanggal_pelaksanaan = $date->format('Y/m/d');
-
-
         foreach ($pertanyaan as $data) {
             $quiz = new Questionnaire();
-            $quiz->tanggal_pelaksanaan = $tanggal_pelaksanaan;
+            $quiz->tanggal_pelaksanaan = $request->tanggal_pelaksanaan;
             $quiz->pelatihan_id = $request->pelatihan;
+            $quiz->komunitas_id = $request->komunitas;
             $quiz->dosen_id = $request->dosen;
             $quiz->anon_user = $user_unique;
             $quiz->pertanyaan_id = $data->id;
-            $quiz->jawaban = $request->{"p" . ($data->id + 12)};
+            $quiz->skor = $request->{'p' . ($data->id + 12)};
             $quiz->save();
         }
 
-        // $dosen->kode_dosen = $request->kode_dosen;
-        // $dosen->nama_dosen = $request->nama_dosen;
-        // $dosen->save();
+        $komentar = new Komentar();
+        $komentar->anon_user = $user_unique;
+        $komentar->komentar = $request->komentar;
+        $komentar->save();
 
         return view('terima_kasih');
     }

@@ -20,6 +20,7 @@ class KomunitasController extends Controller
     {
         $komunitas = new Komunitas();
         $komunitas->komunitas_id = $request->komunitas_id;
+        $komunitas->jenis_umkm = $request->jenis_umkm;
         $komunitas->mitra = $request->mitra;
         $komunitas->nama_pic = $request->nama_pic;
         $komunitas->no_tlp = $request->no_tlp;
@@ -28,6 +29,7 @@ class KomunitasController extends Controller
         $komunitas->jenis_usaha = $request->jenis_usaha;
         $komunitas->keterangan = $request->keterangan;
         $komunitas->jenis_komunitas = $request->jenis_komunitas;
+        $komunitas->alokasi_site = $request->alokasi_site;
         $komunitas->save();
 
         return redirect()->back()->with('success', 'data berhasil ditambahkan');
@@ -46,6 +48,7 @@ class KomunitasController extends Controller
         $komunitas = Komunitas::where('id', $request->id);
         $komunitas->update([
             'komunitas_id' => $request->komunitas_id,
+            'jenis_umkm' => $request->jenis_umkm,
             'mitra' => $request->mitra,
             'nama_pic' => $request->nama_pic,
             'no_tlp' => $request->no_tlp,
@@ -54,6 +57,7 @@ class KomunitasController extends Controller
             'jenis_usaha' => $request->jenis_usaha,
             'jenis_komunitas' => $request->jenis_komunitas,
             'keterangan' => $request->keterangan,
+            'alokasi_site' => $request->alokasi_site
         ]);
 
         return redirect()->route('admin.komunitas')->with('success', 'data berhasil diperbaharui');
@@ -77,6 +81,7 @@ class KomunitasController extends Controller
             ->orwhere('nama_pic', 'LIKE', "%$request->cari%")
             ->orwhere('jenis_usaha', 'LIKE', "%$request->cari%")
             ->orwhere('jenis_komunitas', 'LIKE', "%$request->cari%")
+            ->orwhere('email', 'LIKE', "%$request->cari%")
             ->paginate(10);
 
         return view('admin.data_komunitas', compact('komunitas'));

@@ -47,6 +47,12 @@
                         </div>
 
                         <div>
+                            <label for="jenis_umkm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis UMKM
+                            </label>
+                            <input type="text" id="jenis_umkm" name="jenis_umkm" placeholder="jenis umkm" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        </div>
+
+                        <div>
                             <label for="mitra" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mitra
                             </label>
                             <input type="text" id="mitra" name="mitra" placeholder="mitra" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
@@ -96,6 +102,12 @@
                             <input type="text" id="keterangan" name="keterangan" placeholder="keterangan" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                         </div>
 
+                        <div>
+                            <label for="alokasi_site" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alokasi Site
+                            </label>
+                            <input type="text" id="alokasi_site" name="alokasi_site" placeholder="alokasi site" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        </div>
+
                         <button type="submit" class="w-full text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Add
                         </button>
@@ -143,37 +155,43 @@
         <table class="w-full text-xs text-left text-gray-500 dark:text-gray-400">
             <thead class="text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         No
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         ID Komunitas
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
+                        Jenis UMKM
+                    </th>
+                    <th scope="col" class="px-2.5 py-3">
                         Mitra
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         nama PIC komunitas
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         No. Tlp
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         email
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         alamat komunitas
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         Jenis usaha
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         Jenis Komunitas
                     </th>
-                    <th scope="col" class="px-4 py-3">
+                    <th scope="col" class="px-2.5 py-3">
                         Keterangan
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-2.5 py-3">
+                        Alokasi
+                    </th>
+                    <th scope="col" class="px-5 py-3">
                         <span class="sr-only">Edit</span>
                         <span class="sr-only">Delete</span>
                     </th>
@@ -185,34 +203,40 @@
                     <td class="px-2.5 py-2 font-medium text-gray-900 text-nowrap dark:text-white">
                         {{ $nomor + 1 }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->komunitas_id }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
+                        {{ $data->jenis_umkm }}
+                    </td>
+                    <td class="px-2.5 py-2">
                         {{ $data->mitra }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->nama_pic }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->no_tlp }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->email }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->alamat }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->jenis_usaha }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->jenis_komunitas }}
                     </td>
-                    <td class="px-4 py-2">
+                    <td class="px-2.5 py-2">
                         {{ $data->keterangan }}
                     </td>
-                    <td class="px-4 py-2 text-right flex justify-end">
+                    <td class="px-2.5 py-2">
+                        {{ $data->alokasi_site }}
+                    </td>
+                    <td class="px-2.5 py-2 text-right flex justify-end">
                         <form method="POST" action="{{ route('admin.edit-komunitas', $data->id) }}">
                             @csrf
                             <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4 bg-none">

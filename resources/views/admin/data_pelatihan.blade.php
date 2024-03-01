@@ -40,18 +40,9 @@
                     <form class="space-y-6" method="POST" action="{{route('admin.create-pelatihan')}}">
                         @csrf
                         <div>
-                            <label for="komunitas_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Komunitas</label>
-                            <select type="text" id="komunitas_id" name="komunitas_id" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                <option value="" selected disabled>Pilih komunitas</option>
-                                @foreach($komunitas as $data)
-                                <option value="{{$data->id}}">{{$data->mitra}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label for="nama_jurusan_binaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul
+                            <label for="judul_pelatihan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul
                                 Pelatihan </label>
-                            <input type="text" id="nama_pelatihan" name="nama_pelatihan" placeholder="pelatihan" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                            <input type="text" id="judul_pelatihan" name="judul_pelatihan" placeholder="pelatihan" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                         </div>
                         <button type="submit" class="w-full text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Add
@@ -103,9 +94,6 @@
                     <th scope="col" class="px-2.5 py-3">
                         No
                     </th>
-                    <th scope="col" class="px-2.5 py-3">
-                        Nama Komunitas
-                    </th>
                     <th scope="col" class="px-2.5-4 py-3">
                         Judul Pelatihan
                     </th>
@@ -122,10 +110,7 @@
                         {{$nomor+1}}
                     </td>
                     <td class="px-2.5 py-2">
-                        {{$data->mitra}}
-                    </td>
-                    <td class="px-2.5 py-2">
-                        {{$data->nama_pelatihan}}
+                        {{$data->judul_pelatihan}}
                     </td>
                     <td class="px-2.5 py-2 text-right flex justify-end">
                         <form method="POST" action="{{route('admin.edit-pelatihan', $data->id)}}">

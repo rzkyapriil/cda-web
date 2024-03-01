@@ -14,18 +14,15 @@ class PelatihanController extends Controller
 {
     public function index()
     {
-        $pelatihan = Pelatihan::join('komunitas', 'pelatihan.komunitas_id', 'komunitas.id')
-            ->select('pelatihan.*', 'komunitas.mitra')
+        $pelatihan = Pelatihan::select('*')
             ->paginate(10);
-        $komunitas = Komunitas::select('*')->get();
-        return view('admin.data_pelatihan', compact('pelatihan', 'komunitas'));
+        return view('admin.data_pelatihan', compact('pelatihan'));
     }
 
     public function create(Request $request)
     {
         $pelatihan = new Pelatihan();
-        $pelatihan->komunitas_id = $request->komunitas_id;
-        $pelatihan->nama_pelatihan = $request->nama_pelatihan;
+        $pelatihan->judul_pelatihan = $request->judul_pelatihan;
         $pelatihan->save();
 
         return redirect()->back()->with('success', 'data berhasil ditambahkan');
@@ -35,17 +32,15 @@ class PelatihanController extends Controller
     {
         $user = Auth::user();
         $pelatihan = Pelatihan::where('id', $request->id)->first();
-        $komunitas = Komunitas::select('*')->get();
 
-        return view('admin.edit_pelatihan', compact('user', 'pelatihan', 'komunitas'));
+        return view('admin.edit_pelatihan', compact('user', 'pelatihan'));
     }
 
     public function update(Request $request)
     {
         $pelatihan = Pelatihan::where('id', $request->id);
         $pelatihan->update([
-            'komunitas_id' => $request->komunitas_id,
-            'nama_pelatihan' => $request->nama_pelatihan,
+            'judul_pelatihan' => $request->judul_pelatihan,
         ]);
 
         return redirect()->route('admin.pelatihan')->with('success', 'data berhasil diperbaharui');
@@ -64,20 +59,10 @@ class PelatihanController extends Controller
 
     public function cari(Request $request)
     {
-        $komunitas = Komunitas::select('*')->get();
-        $pelatihan = Pelatihan::join('komunitas', 'pelatihan.komunitas_id', 'komunitas.id')
-            ->select('pelatihan.*', 'komunitas.mitra')
-            ->where('komunitas.mitra', 'LIKE', "%$request->cari%")
-            ->orwhere('nama_pelatihan', 'LIKE', "%$request->cari%")
+        $pelatihan = Pelatihan::select('*')
+            ->where('pelatihan.judul_pelatihan', 'LIKE', "%$request->cari%")
             ->paginate(10);
 
-        return view('admin.data_pelatihan', compact('pelatihan', 'komunitas'));
-    }
-
-    public function list(): JsonResponse
-    {
-        $pelatihan = Pelatihan::select('*')->get();
-
-        return (PelatihanResource::collection($pelatihan))->response()->setStatusCode(200);
+        return view('admin.data_pelatihan', compact('pelatihan'));
     }
 }

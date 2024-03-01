@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('komunitas', function (Blueprint $table) {
             $table->id();
-            $table->string('komunitas_id', 20)->nullable(false);
-            $table->string('mitra', 200)->nullable(false);
-            $table->string('nama_pic', 200)->nullable(false);
-            $table->string('no_tlp', 20)->nullable(false);
-            $table->string('email', 20)->nullable(false);
-            $table->string('alamat', 256)->nullable(false);
-            $table->string('jenis_usaha', 100)->nullable(false);
-            $table->string('keterangan', 200)->nullable(false);
-            $table->string('jenis_komunitas', 200)->nullable(false);
+            $table->string('komunitas_id', 20)->nullable();
+            $table->string('jenis_umkm', 100)->nullable();
+            $table->string('mitra', 200)->nullable();
+            $table->string('nama_pic', 200)->nullable();
+            $table->string('no_tlp', 20)->nullable();
+            $table->string('email', 100)->nullable();
+            $table->string('alamat', 256)->nullable();
+            $table->string('jenis_usaha', 100)->nullable();
+            $table->string('keterangan', 200)->nullable();
+            $table->string('jenis_komunitas', 200)->nullable();
+            $table->string('alokasi_site', 100)->nullable();
             $table->timestamps();
         });
     }

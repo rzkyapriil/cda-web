@@ -10,18 +10,19 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DosenController extends Controller
 {
     public function index()
     {
-        $dosen = Dosen::join('binaan', 'dosen.binaan_id', 'binaan.id')
+        $dosen = DB::table('dosen')->join('binaan', 'dosen.binaan_id', 'binaan.id')
             ->join('fakultas', 'binaan.fakultas_id', 'fakultas.id')
             ->join('jurusan_binaan', 'binaan.jurusan_binaan_id', 'jurusan_binaan.id')
             ->join('area_kampus', 'binaan.area_kampus_id', 'area_kampus.id')
             ->select('dosen.*', 'binaan.program_binaan', 'fakultas.nama_fakultas', 'jurusan_binaan.nama_jurusan_binaan', 'area_kampus.nama_area_kampus')
             ->orderBy('kode_dosen')->paginate(10);
-        $binaan = Binaan::join('fakultas', 'binaan.fakultas_id', 'fakultas.id')
+        $binaan = DB::table('binaan')->join('fakultas', 'binaan.fakultas_id', 'fakultas.id')
             ->join('jurusan_binaan', 'binaan.jurusan_binaan_id', 'jurusan_binaan.id')
             ->join('area_kampus', 'binaan.area_kampus_id', 'area_kampus.id')
             ->select('binaan.*', 'fakultas.nama_fakultas', 'jurusan_binaan.nama_jurusan_binaan', 'area_kampus.nama_area_kampus')

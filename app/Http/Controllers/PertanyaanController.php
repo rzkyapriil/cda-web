@@ -6,12 +6,13 @@ use App\Models\Pertanyaan;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PertanyaanController extends Controller
 {
     public function index()
     {
-        $pertanyaan = Pertanyaan::select('*')
+        $pertanyaan = DB::table('pertanyaan')->select('*')
             ->paginate(10);
 
         return view('admin.data_pertanyaan', compact('pertanyaan'));
