@@ -1,4 +1,4 @@
-<header class="flex w-full">
+<header class="flex w-full" id="header">
   <nav class="bg-white w-full z-20 top-0 start-0 border-b border-[#008ED3]">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="{{ route('home') }}" class="flex items-center rtl:space-x-reverse">

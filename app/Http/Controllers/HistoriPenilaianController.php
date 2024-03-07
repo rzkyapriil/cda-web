@@ -31,10 +31,9 @@ class HistoriPenilaianController extends Controller
         $startDate = $request->tgl_mulai == null ? Carbon::now()->startOfMonth()->format('Y-m-d H:i:s') : $request->tgl_mulai;
         $endDate = $request->tgl_selesai == null ? Carbon::now()->endOfMonth()->format('Y-m-d H:i:s') : $request->tgl_selesai;
 
-        $area = AreaKampus::select('*')->get();
-        $jurusan = JurusanBinaan::select('*')->get();
-        $fakultas = Fakultas::select('*')->get();
-        // $dosen = DB::table('dosen')->select('*')->get();
+        $area = DB::table('area_kampus')->select('*')->get();
+        $jurusan = DB::table('jurusan_binaan')->select('*')->get();
+        $fakultas = DB::table('fakultas')->select('*')->get();
 
         $data_area = $request->area;
         $data_fakultas = $request->fakultas;
@@ -70,7 +69,7 @@ class HistoriPenilaianController extends Controller
             ->where('binaan.fakultas_id', ($data_fakultas == null ? '!=' : '='), $data_fakultas)
             ->where('binaan.jurusan_binaan_id', ($data_jurusan == null ? '!=' : '='), $data_jurusan)
             ->whereBetween('questionnaire.created_at', [$data_tgl_mulai, $data_tgl_selesai])
-            ->select('questionnaire.dosen_id', 'dosen.nama_dosen')
+            ->select('questionnaire.dosen_id', 'dosen.nama_dosen', 'dosen.kode_dosen')
             ->distinct('questionnaire.dosen_id')
             ->get();
 
@@ -121,18 +120,50 @@ class HistoriPenilaianController extends Controller
         return $hasil;
     }
 
-    public function getArea($idArea) {
-        $area = AreaKampus::where('id', $idArea)->first();
+    public function getTotalKomunitasPerNilai($data_area, $data_fakultas, $data_jurusan, $data_tgl_mulai, $data_tgl_selesai, $nilai)
+    {
+        $jumlah = DB::table('questionnaire')->join('dosen', 'questionnaire.dosen_id', 'dosen.id')
+            ->join('binaan', 'dosen.binaan_id', 'binaan.id')
+            ->where('questionnaire.skor', $nilai)
+            ->where('binaan.area_kampus_id', ($data_area == null ? '!=' : '='), $data_area)
+            ->where('binaan.fakultas_id', ($data_fakultas == null ? '!=' : '='), $data_fakultas)
+            ->where('binaan.jurusan_binaan_id', ($data_jurusan == null ? '!=' : '='), $data_jurusan)
+            ->whereBetween('questionnaire.created_at', [$data_tgl_mulai, $data_tgl_selesai])
+            ->distinct('questionnaire.komunitas_id')
+            ->count();
+        $jumlah_banyak_nilai = DB::table('questionnaire')->join('dosen', 'questionnaire.dosen_id', 'dosen.id')
+            ->join('binaan', 'dosen.binaan_id', 'binaan.id')
+            ->where('binaan.area_kampus_id', ($data_area == null ? '!=' : '='), $data_area)
+            ->where('binaan.fakultas_id', ($data_fakultas == null ? '!=' : '='), $data_fakultas)
+            ->where('binaan.jurusan_binaan_id', ($data_jurusan == null ? '!=' : '='), $data_jurusan)
+            ->whereBetween('questionnaire.created_at', [$data_tgl_mulai, $data_tgl_selesai])
+            ->distinct('questionnaire.komunitas_id')
+            ->count();
+
+        try {
+            $hasil = $jumlah;
+        } catch (DivisionByZeroError $e) {
+            $hasil = 0;
+        }
+
+        return $jumlah;
+    }
+
+    public function getArea($idArea)
+    {
+        $area = DB::table('area_kampus')->where('id', $idArea)->first();
         return $area;
     }
 
-    public function getFakultas($idFakultas) {
-        $fakultas = Fakultas::where('id', $idFakultas)->first();
+    public function getFakultas($idFakultas)
+    {
+        $fakultas = DB::table('fakultas')->where('id', $idFakultas)->first();
         return $fakultas;
     }
 
-    public function getJurusan($idJurusan) {
-        $jurusan = JurusanBinaan::where('id', $idJurusan)->first();
+    public function getJurusan($idJurusan)
+    {
+        $jurusan = DB::table('jurusan_binaan')->where('id', $idJurusan)->first();
         return $jurusan;
     }
 }

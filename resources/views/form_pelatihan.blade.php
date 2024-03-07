@@ -21,16 +21,16 @@
         <form method="POST" action="{{ route('form-pelatihan.store') }}" class="max-w-3xl mx-auto px-4 md:px-2 mb-12">
           @csrf
           <div class="flex flex-col mt-5 border border-black bg-black rounded-xl py-4 mb-4">
-            <h1 class="text-lg font-bold text-center uppercase text-white">Form Pelatihan</h1>
+            <h1 class="text-lg md:text-xl font-bold text-center uppercase text-white">Form Pelatihan</h1>
           </div>
 
-          <div class="flex flex-col gap-4 border border-gray-800 p-6 rounded-lg">
+          <div class="flex flex-col gap-4 border border-gray-800 p-6 rounded-xl">
             <div>
-              <label for="judul" class="block mb-2.5 font-medium text-gray-900 dark:text-black">
+              <label for="judul_pelatihan" class="block mb-2.5 font-medium text-gray-900 dark:text-black">
                 Judul Pelatihan
               </label>
               <div class="relative w-full">
-                <input type="text" id="judul" name="judul" placeholder="Judul pelatihan" required
+                <input type="text" id="judul_pelatihan" name="judul_pelatihan" placeholder="Judul pelatihan" required
                   class="bg-gray-50 border border-gray-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
               </div>
             </div>
@@ -38,7 +38,7 @@
 
           <div class="flex flex-row-reverse mt-4">
             <button type="submit"
-              class="text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-8 py-2.5 focus:outline-none uppercase">
+              class="text-sm text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-6 py-2.5 focus:outline-none uppercase">
               Submit
             </button>
           </div>

@@ -177,6 +177,9 @@ setlocale(LC_TIME, 'id_ID.utf8');
               No
             </th>
             <th scope="col" class="px-2.5 py-3">
+              Kode Dosen
+            </th>
+            <th scope="col" class="px-2.5 py-3">
               Nama Dosen
             </th>
           </tr>
@@ -186,6 +189,9 @@ setlocale(LC_TIME, 'id_ID.utf8');
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <td class="px-2.5 py-2 font-medium text-gray-900 text-nowrap dark:text-white">
               {{ $nomor + 1 }}
+            </td>
+            <td class="px-2.5 py-2">
+              {{ $data->kode_dosen }}
             </td>
             <td class="px-2.5 py-2">
               {{ $data->nama_dosen }}
@@ -206,22 +212,30 @@ setlocale(LC_TIME, 'id_ID.utf8');
 
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ["Skor", "Persentase", {
-        role: "style"
-      }],
+      [
+        "Skor", 
+        "Persentase", 
+        "test", 
+        { role: "style"}
+      ],
 
       @for ($i = 1; $i <= 6; $i++)
       ["{{ $i }}",
         @if (isset($data_area) or isset($data_fakultas) or isset($data_jurusan) or isset($data_tgl_mulai) or isset($data_tgl_selesai))
-    { { app() -> make('App\Http\Controllers\HistoriPenilaianController') -> getNilai($data_area, $data_fakultas, $data_jurusan, $data_tgl_mulai, $data_tgl_selesai, $i) } },
-    @endif
-    getRandomColor()
-          ],
-    @endfor
+          {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getNilai($data_area, $data_fakultas, $data_jurusan, $data_tgl_mulai, $data_tgl_selesai, $i) }},
+        @endif
+        @if (isset($data_area) or isset($data_fakultas) or isset($data_jurusan) or isset($data_tgl_mulai) or isset($data_tgl_selesai))
+          {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getTotalKomunitasPerNilai($data_area, $data_fakultas, $data_jurusan, $data_tgl_mulai, $data_tgl_selesai, $i) }},
+        @endif
+        getRandomColor()
+      ],
+      @endfor
       ]);
 
     var view = new google.visualization.DataView(data);
-    view.setColumns([0, 1,
+    view.setColumns([
+      0, 
+      1,
       {
         calc:
           function (dataTable, rowNum) {
@@ -238,7 +252,23 @@ setlocale(LC_TIME, 'id_ID.utf8');
         type: "string",
         role: "annotation"
       },
-      2
+      {
+        calc:
+          function (dataTable, rowNum) {
+            var value = dataTable.getValue(rowNum, 2);
+            var total = 0;
+
+            for (var i = 0; i < dataTable.getNumberOfRows(); i++) {
+              total += dataTable.getValue(i, 1);
+            }
+
+            return 'Total Komunitas: ' + value;
+          },
+        sourceColumn: 2,
+        type: "string",
+        role: "tooltip"
+      },
+      3
     ]);
 
     var options = {

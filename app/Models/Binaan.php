@@ -21,6 +21,11 @@ class Binaan extends Model
         'area_kampus_id',
     ];
 
+    public function binaan(): HasMany
+    {
+        return $this->hasMany(Binaan::class, 'binaan_id', 'id');
+    }
+
     public function fakultas(): HasMany
     {
         return $this->hasMany(Fakultas::class, 'fakultas_id', 'id');

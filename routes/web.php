@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/terima-kasih', [\App\Http\Controllers\HomeController::class, 'terima'])->name('terima-kasih');
 
-Route::get('/questionnaire', [\App\Http\Controllers\HomeController::class, 'questionnaire'])->name('questionnaire');
-Route::post('/questionnaire', [\App\Http\Controllers\QuestionnaireController::class, 'create'])->name('create-questionnaire');
+Route::get('/questionnaire', [\App\Http\Controllers\QuestionnaireController::class, 'index'])->name('questionnaire');
+Route::post('/questionnaire', [\App\Http\Controllers\QuestionnaireController::class, 'store'])->name('questionnaire.store');
 
 Route::get('/form-pelatihan', [\App\Http\Controllers\FormPelatihanController::class, 'index'])->name('form-pelatihan.index');
 Route::post('/form-pelatihan', [\App\Http\Controllers\FormPelatihanController::class, 'store'])->name('form-pelatihan.store');

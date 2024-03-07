@@ -1,20 +1,21 @@
 @extends('layouts.app')
-@section('title', 'Questionnaire')
+@section('title', 'Questionnaire - Community Empowerment')
 
 @section('content')
   @include('components.header')
+
   <div class="flex items-center justify-center p-4 text-sm text-gray-800 font-bold bg-yellow-200">
-    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-      viewBox="0 0 20 20">
+    <svg class="flex-shrink-0 inline w-4 h-4 me-3"
+      aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
       <path
         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
     </svg>
     <span class="sr-only">Info</span>
-    <div class="font-medium">
-      Mohon lengkapi jawaban yang sesuai menurut bapak/ibu. Jika pelatihan & komunitas belum tersedia, silahkan klik
-      button tambah.
-    </div>
+    <p class="font-medium">
+      Mohon lengkapi jawaban yang sesuai menurut bapak/ibu. Jika pelatihan & komunitas belum tersedia, silahkan klik button tambah.
+    </p>
   </div>
+
   @if (session('success'))
     <div id="alert-success"
       class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
@@ -63,32 +64,23 @@
     </div>
   @endif
 
-  <form method="POST" action="{{ route('create-questionnaire') }}" class="max-w-3xl mx-auto px-4 md:px-2 mb-12">
+  <form method="POST" action="{{ route('questionnaire.store') }}" class="max-w-3xl mx-auto px-4 md:px-2 mb-12">
     @csrf
-    <div class="flex flex-col mt-5 border border-black bg-black rounded-2xl py-4 md:py-5">
+    <div class="flex flex-col mt-5 border border-black bg-black rounded-xl py-4">
       <h1 class="text-lg md:text-xl font-bold text-center uppercase text-white">Questionnaire</h1>
     </div>
 
-    <div id="questionnaire-1" class="mt-5 text-sm md:text-base">
-      <div class="border border-gray-800 p-6 rounded-lg">
+    <div id="questionnaire-1" class="mt-4 text-sm md:text-base space-y-4">
+      <div class="border border-gray-800 p-6 rounded-xl">
         <label for="tanggal_pelaksanaan" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
           Tanggal Kegiatan / Pelaksanaan
         </label>
-        <div class="relative w-full">
-          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-            </svg>
-          </div>
-          <input type="date" id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" required
-            class="bg-gray-50 border border-gray-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-            placeholder="Select date">
-        </div>
+
+        <input type="date" id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" placeholder="Select date" required
+            class="bg-gray-50 border border-gray-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
       </div>
 
-      <div class="border border-gray-800 p-6 rounded-lg mt-6">
+      <div class="border border-gray-800 p-6 rounded-xl">
         <label for="pelatihan" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
           Pelatihan
         </label>
@@ -116,7 +108,7 @@
         </select>
       </div>
 
-      <div class="border border-gray-800 p-6 rounded-lg mt-6">
+      <div class="border border-gray-800 p-6 rounded-xl">
         <label for="komunitas" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
           Komunitas
         </label>
@@ -144,7 +136,7 @@
         </select>
       </div>
 
-      <div class="border border-gray-800 p-6 rounded-lg mt-6">
+      <div class="border border-gray-800 p-6 rounded-xl">
         <label for="dosen" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
           Kode dan Nama Dosen
         </label>
@@ -172,15 +164,17 @@
         </select>
       </div>
 
-      <div class="flex flex-row-reverse bg-transparent mt-6">
+      <div class="flex justify-end">
         <button type="button" id="next"
-          class="text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-8 py-3 focus:outline-none uppercase">Next</button>
+          class="text-sm bg-gray-100 text-black border border-black hover:bg-black hover:text-white font-bold rounded-lg px-6 py-2.5 focus:outline-none uppercase">
+          Next
+        </button>
       </div>
     </div>
 
-    <div id="questionnaire-2" class="hidden mt-5">
-      <div class="flex flex-col border border-black rounded-2xl p-8 text-lg">
-        <p class="text-xl font-bold mb-2">Penjelasan Skala</p>
+    <div id="questionnaire-2" class="hidden mt-4">
+      <div class="flex flex-col border border-black rounded-xl py-6 px-8">
+        <p class="text-lg font-bold mb-1.5">Penjelasan Skala</p>
         <p>1 : Sangat Tidak Setuju</p>
         <p>2 : Tidak Setuju</p>
         <p>3 : Biasa Saja</p>
@@ -191,12 +185,12 @@
 
       <div class="flex flex-col">
         @foreach ($pertanyaan as $nomor => $data)
-          <div class="flex flex-col border rounded-2xl border-black p-8 mt-6">
+          <div class="flex flex-col border rounded-xl border-black p-8 mt-4">
             <div class="text-center content-center justify-items-center">
-              <p class="text-xl font-bold text-center capitalize text-black">{{ $data->pertanyaan }}</p>
+              <p class="font-bold text-center uppercase text-black">{{ $data->pertanyaan }}</p>
             </div>
             <div class="flex flex-col md:flex-row mt-6 gap-4 items-center justify-center">
-              <div class="flex text-sm text-center uppercase text-black">
+              <div class="flex text-xs text-center uppercase font-medium">
                 Sangat Tidak Setuju
               </div>
 
@@ -207,16 +201,15 @@
                       <input type="radio" class="peer sr-only" name="{{ 'p' . ($data->id + 12) }}"
                         value="{{ $i }}" required />
                       <div
-                        class="rounded-md bg-white border border-black py-1.5 px-7 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-white peer-checked:bg-black">
-                        <p class="text-sm font-semibold text-center uppercase">{{ $i }}
-                        </p>
+                        class="rounded-md bg-white border border-black py-1.5 px-6 ring-2 ring-transparent transition-all duration-300 hover:shadow peer-checked:text-white peer-checked:bg-black">
+                        <p class="text-sm font-semibold text-center uppercase"> {{ $i }} </p>
                       </div>
                     </label>
                   </div>
                 @endfor
               </div>
 
-              <div class="flex text-sm text-center uppercase text-black">
+              <div class="flex text-xs text-center uppercase text-black">
                 Sangat Setuju Sekali
               </div>
             </div>
@@ -224,33 +217,85 @@
         @endforeach
       </div>
 
-      <div class="border border-gray-800 p-6 rounded-2xl mt-6">
+      <div class="border border-gray-800 p-6 rounded-2xl mt-4">
         <label for="komentar" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
           Komentar atau saran
         </label>
 
-        <textarea id="komentar" placeholder="komentar" name="komentar" rows="4" required
+        <textarea id="komentar" placeholder="Berikan komentar . . ." name="komentar" rows="4" required
           class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
       </div>
 
-      <div class="flex flex-row-reverse bg-transparent mt-6">
+      <div class="flex justify-between mt-4">
+        <button type="button" id="prev"
+          class="text-sm bg-gray-100 text-black border border-black hover:bg-black hover:text-white font-bold rounded-lg px-6 py-2.5 focus:outline-none uppercase">
+          PREVIOUS
+        </button>
+
         <button type="submit"
-          class="text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-8 py-3 focus:outline-none uppercase">
+          class="text-sm text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-6 py-2.5 focus:outline-none uppercase">
           Submit
         </button>
       </div>
     </div>
   </form>
+
   @include('components.footer')
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
   <script>
-    $('#questionnaire-2').hide();
+    
+    var head = document.getElementById('header');
 
     $(document).ready(function() {
+      function validateForm() {
+        var tanggal_pelaksanaan = document.getElementById('tanggal_pelaksanaan').value;
+        var pelatihan = document.getElementById('pelatihan').value;
+        var komunitas = document.getElementById('komunitas').value;
+        var dosen = document.getElementById('dosen').value;
+
+        if (tanggal_pelaksanaan === '') {
+          alert('Silahkan isi tanggal pelaksanaan');
+          return false; // Prevent form submission
+        }
+
+        if (pelatihan === '') {
+          alert('Silahkan pilih pelatihan');
+          return false; // Prevent form submission
+        }
+
+        if (komunitas === '') {
+          alert('Silahkan pilih komunitas');
+          return false; // Prevent form submission
+        }
+
+        if (dosen === '') {
+          alert('Silahkan pilih dosen');
+          return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+      }
+
       $("#next").click(function() {
-        $('#questionnaire-1').hide();
-        $('#questionnaire-2').show();
+        let validate = validateForm()
+
+        if(validate){
+          head.scrollIntoView({ 
+            behavior: 'smooth'
+          });
+
+          $('#questionnaire-1').hide();
+          $('#questionnaire-2').show();
+        }
+      });
+
+      $("#prev").click(function() {
+        head.scrollIntoView({ 
+          behavior: 'smooth'
+        });
+
+        $('#questionnaire-2').hide();
+        $('#questionnaire-1').show();
       });
     });
   </script>

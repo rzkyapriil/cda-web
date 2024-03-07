@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Dosen extends Model
 {
@@ -20,8 +22,8 @@ class Dosen extends Model
         'nama_dosen',
     ];
 
-    public function binaan(): HasMany
+    public function binaan(): HasOne
     {
-        return $this->hasMany(Binaan::class, 'binaan_id', 'id');
+        return $this->hasOne(Binaan::class, 'id', 'binaan_id');
     }
 }

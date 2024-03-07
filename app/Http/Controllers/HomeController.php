@@ -24,7 +24,7 @@ class HomeController extends Controller
 
     public function questionnaire()
     {
-        $pertanyaan = DB::table('pertanyaan')->select('*')->get();
+        $pertanyaan = DB::table('pertanyaan')->get();
         $pelatihan = DB::table('pelatihan')->get();
         $komunitas = DB::table('komunitas')->get();
         $dosen = DB::table('dosen')->join('binaan', 'dosen.binaan_id', 'binaan.id')
@@ -34,12 +34,14 @@ class HomeController extends Controller
             ->select('dosen.*', 'binaan.program_binaan', 'fakultas.nama_fakultas', 'jurusan_binaan.nama_jurusan_binaan', 'area_kampus.nama_area_kampus')
             ->get();
 
-        return view('questionnaire',
+        return view(
+            'questionnaire',
             compact(
                 'pertanyaan',
                 'pelatihan',
                 'dosen',
                 'komunitas'
-            ));
+            )
+        );
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Community Development Academic')
+@section('title', 'Community Empowerment')
 
 @section('content')
   <div class="min-h-screen min-w-full flex flex-col">
@@ -28,7 +28,8 @@
         </div>
       </div>
     </section>
-    @include('components.footer')
-  </div>
 
+    @include('components.footer')
+
+  </div>
 @endsection

@@ -21,10 +21,10 @@
         <form method="POST" action="{{ route('form-komunitas.store') }}" class="max-w-3xl mx-auto px-4 md:px-2 mb-12">
           @csrf
           <div class="flex flex-col mt-5 border border-black bg-black rounded-xl py-4 mb-4">
-            <h1 class="text-lg font-bold text-center uppercase text-white">Form Komunitas</h1>
+            <h1 class="text-lg md:text-xl font-bold text-center uppercase text-white">Form Komunitas</h1>
           </div>
 
-          <div class="flex flex-col gap-4 border border-gray-800 p-6 rounded-lg">
+          <div class="flex flex-col gap-4 border border-gray-800 p-6 rounded-xl">
             <div>
               <label for="jenis_komunitas" class="block mb-2.5 font-medium text-gray-900 dark:text-black">
                 Jenis Komunitas
@@ -75,7 +75,7 @@
 
           <div class="flex flex-row-reverse mt-4">
             <button type="submit"
-              class="text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-8 py-2.5 focus:outline-none uppercase">
+              class="text-sm text-white bg-black hover:bg-gray-700 font-bold rounded-lg px-6 py-2.5 focus:outline-none uppercase">
               Submit
             </button>
           </div>
