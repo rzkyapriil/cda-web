@@ -100,6 +100,7 @@
 
         <select id="pelatihan" name="pelatihan" size="5" required
           class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option value="" selected disabled>Pilih Pelatihan</option>
           @foreach ($pelatihan as $data)
             <option value="{{ $data->id }}">
               {{ $data->judul_pelatihan }}
@@ -128,6 +129,7 @@
 
         <select id="komunitas" name="komunitas" size="5" required
           class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option value="" selected disabled>Pilih Komunitas</option>
           @foreach ($komunitas as $data)
             <option value="{{ $data->id }}">
               {{ $data->mitra . ' - ' . $data->jenis_komunitas }}
@@ -150,6 +152,7 @@
 
         <select id="dosen" name="dosen" size="5" required
           class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option value="" selected disabled>Pilih Dosen</option>
           @foreach ($dosen as $data)
             <option value="{{ $data->id }}">
               {{ $data->kode_dosen .
@@ -247,6 +250,38 @@
     var head = document.getElementById('header');
 
     $(document).ready(function() {
+      function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function runOnMobile() {
+          var se_pelatihan = document.getElementById("pelatihan");
+          var se_komunitas = document.getElementById("komunitas");
+          var se_dosen = document.getElementById("dosen");
+          se_pelatihan.size = 1;
+          se_komunitas.size = 1;
+          se_dosen.size = 1;
+
+          console.log("Running on a mobile device!");
+        }
+
+        function runOnDesktop() {
+          var se_pelatihan = document.getElementById("pelatihan");
+          var se_komunitas = document.getElementById("komunitas");
+          var se_dosen = document.getElementById("dosen");
+          se_pelatihan.size = 5;
+          se_komunitas.size = 5;
+          se_dosen.size = 5;
+          
+          console.log("Running on a desktop device!");
+        }
+
+        if (isMobileDevice()) {
+          runOnMobile();
+        } else {
+          runOnDesktop();
+        }
+
       function validateForm() {
         var tanggal_pelaksanaan = document.getElementById('tanggal_pelaksanaan').value;
         var pelatihan = document.getElementById('pelatihan').value;
