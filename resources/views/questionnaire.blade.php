@@ -3,7 +3,6 @@
 
 @section('content')
   @include('components.header')
-
   <div class="flex items-center justify-center p-4 text-sm text-gray-800 font-bold bg-yellow-200">
     <svg class="flex-shrink-0 inline w-4 h-4 me-3"
       aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -64,7 +63,7 @@
     </div>
   @endif
 
-  <form method="POST" action="{{ route('questionnaire.store') }}" class="max-w-3xl mx-auto px-4 md:px-2 mb-12">
+  <form method="POST" action="{{ route('questionnaire.store') }}" class="max-w-3xl mx-auto px-4 md:px-2 mb-6">
     @csrf
     <div class="flex flex-col mt-5 border border-black bg-black rounded-xl py-4">
       <h1 class="text-lg md:text-xl font-bold text-center uppercase text-white">Questionnaire</h1>
@@ -73,98 +72,119 @@
     <div id="questionnaire-1" class="mt-4 text-sm md:text-base space-y-4">
       <div class="border border-gray-800 p-6 rounded-xl">
         <label for="tanggal_pelaksanaan" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
-          Tanggal Kegiatan / Pelaksanaan
+          Tanggal Kegiatan / Pelaksanaan <span class="text-red-500">*</span>
         </label>
 
-        <input type="date" id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" placeholder="Select date" required
+        <input type="date" id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" placeholder="Select date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required
             class="bg-gray-50 border border-gray-800 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
       </div>
 
       <div class="border border-gray-800 p-6 rounded-xl">
         <label for="pelatihan" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
-          Pelatihan
+          Pelatihan <span class="text-red-500">*</span>
         </label>
+        <div class="flex flex-row gap-2">
+          <div class="relative w-full">
+            <select data-hs-select='{
+                "hasSearch": true,
+                "searchPlaceholder": "Cari pelatihan",
+                "searchClasses": "block w-full text-sm bg-white border-black rounded-lg focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 py-2 px-3",
+                "searchWrapperClasses": "bg-gray-100 border-b border-black p-2 -mx-1 sticky top-0 dark:bg-slate-900",
+                "placeholder": "Pilih pelatihan",
+                "toggleTag": "<button type=\"button\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 dark:text-gray-200\" data-title></span></button>",
+                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-gray-50 border border-black rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600",
+                "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-20 w-full bg-white border border-black rounded-lg overflow-hidden overflow-y-auto dark:bg-slate-900 dark:border-gray-700",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:focus:bg-slate-800",
+                "optionTemplate": "<div><div class=\"flex items-center\"><div class=\"me-2\" data-icon></div><div class=\"text-gray-800 dark:text-gray-200\" data-title></div></div></div>"
+              }' class="hidden" id="pelatihan" name="pelatihan" required>
+              <option value="">Pilih pelatihan</option>
+              @foreach ($pelatihan as $data)
+              <option value="{{ $data->id }}">
+                {{ $data->judul_pelatihan }}
+              </option>
+              @endforeach
+            </select>
+  
+            <div class="absolute top-1/2 end-3 -translate-y-1/2">
+              <svg class="flex-shrink-0 size-3.5 text-gray-500 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+            </div>
+          </div>
 
-        {{-- searching --}}
-        <div class="mb-2.5 flex gap-2">
-          <input id="search_pelatihan" type="text" placeholder="Search nama pelatihan"
-            onkeyup="filterOptions('search_pelatihan', 'pelatihan')"
-            class="bg-gray-50 border border-gray-800 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
-          <a href="{{ route('form-pelatihan.index') }}" title="Tambah Data"
-            class="flex items-center justify-center w-fit h-[42px] p-2.5 text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 cursor-pointer">
-            <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-            </svg>
+          <a href="{{ route('form-pelatihan.index') }}" class="flex bg-black fill-white hover:bg-gray-100 hover:fill-black w-fit justify-center items-center px-3 border border-black rounded-lg">
+            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
           </a>
         </div>
-
-        <select id="pelatihan" name="pelatihan" size="5" required
-          class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-          <option value="" selected disabled>Pilih Pelatihan</option>
-          @foreach ($pelatihan as $data)
-            <option value="{{ $data->id }}">
-              {{ $data->judul_pelatihan }}
-            </option>
-          @endforeach
-        </select>
+        
       </div>
 
       <div class="border border-gray-800 p-6 rounded-xl">
         <label for="komunitas" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
-          Komunitas
+          Komunitas <span class="text-red-500">*</span>
         </label>
 
-        {{-- searching --}}
-        <div class="mb-2.5 flex gap-2">
-          <input id="search_komunitas" type="text" placeholder="Search komunitas"
-            onkeyup="filterOptions('search_komunitas', 'komunitas')"
-            class="bg-gray-50 border border-gray-800 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
-          <a href="{{ route('form-komunitas.index') }}" title="Tambah Data"
-            class="flex items-center justify-center w-fit h-[42px] p-2.5 text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 cursor-pointer">
-            <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-            </svg>
+        <div class="flex flex-row gap-2">
+          <div class="relative w-full">
+            <select data-hs-select='{
+                "hasSearch": true,
+                "searchPlaceholder": "Cari komunitas",
+                "searchClasses": "block w-full text-sm bg-white border-black rounded-lg focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 py-2 px-3",
+                "searchWrapperClasses": "bg-gray-100 border-b border-black p-2 -mx-1 sticky top-0 dark:bg-slate-900",
+                "placeholder": "Pilih komunitas",
+                "toggleTag": "<button type=\"button\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 dark:text-gray-200\" data-title></span></button>",
+                "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-gray-50 border border-black rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600",
+                "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-20 w-full bg-white border border-black rounded-lg overflow-hidden overflow-y-auto dark:bg-slate-900 dark:border-gray-700",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:focus:bg-slate-800",
+                "optionTemplate": "<div><div class=\"flex items-center\"><div class=\"me-2\" data-icon></div><div class=\"text-gray-800 dark:text-gray-200\" data-title></div></div></div>"
+              }' class="hidden" id="komunitas" name="komunitas" required>
+              <option value="">Pilih komunitas</option>
+              @foreach ($komunitas as $data)
+              <option value="{{ $data->id }}">
+                {{ $data->mitra . ' - ' . $data->jenis_komunitas }}
+              </option>
+              @endforeach
+            </select>
+  
+            <div class="absolute top-1/2 end-3 -translate-y-1/2">
+              <svg class="flex-shrink-0 size-3.5 text-gray-500 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+            </div>
+          </div>
+
+          <a href="{{ route('form-komunitas.index') }}" class="flex bg-black fill-white hover:bg-gray-100 hover:fill-black w-fit justify-center items-center px-3 border border-black rounded-lg">
+            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
           </a>
         </div>
-
-        <select id="komunitas" name="komunitas" size="5" required
-          class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-          <option value="" selected disabled>Pilih Komunitas</option>
-          @foreach ($komunitas as $data)
-            <option value="{{ $data->id }}">
-              {{ $data->mitra . ' - ' . $data->jenis_komunitas }}
-            </option>
-          @endforeach
-        </select>
       </div>
 
       <div class="border border-gray-800 p-6 rounded-xl">
         <label for="dosen" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
-          Kode dan Nama Dosen
+          Kode dan Nama Dosen <span class="text-red-500">*</span>
         </label>
 
-        {{-- searching --}}
-        <div class="mb-2.5 flex">
-          <input id="search_dosen" type="text" placeholder="Search nama dosen"
-            onkeyup="filterOptions('search_dosen', 'dosen')"
-            class="bg-gray-50 border border-gray-800 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
-        </div>
-
-        <select id="dosen" name="dosen" size="5" required
-          class="bg-gray-50 border border-gray-800 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-          <option value="" selected disabled>Pilih Dosen</option>
-          @foreach ($dosen as $data)
+        <div class="relative">
+          <select data-hs-select='{
+              "hasSearch": true,
+              "searchPlaceholder": "Cari dosen",
+              "searchClasses": "block w-full text-sm bg-white border-black rounded-lg focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 py-2 px-3",
+              "searchWrapperClasses": "bg-gray-100 border-b border-black p-2 -mx-1 sticky top-0 dark:bg-slate-900",
+              "placeholder": "Pilih dosen",
+              "toggleTag": "<button type=\"button\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 dark:text-gray-200\" data-title></span></button>",
+              "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-gray-50 border border-black rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600",
+              "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-20 w-full bg-white border border-black rounded-lg overflow-hidden overflow-y-auto dark:bg-slate-900 dark:border-gray-700",
+              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:focus:bg-slate-800",
+              "optionTemplate": "<div><div class=\"flex items-center\"><div class=\"me-2\" data-icon></div><div class=\"text-gray-800 dark:text-gray-200\" data-title></div></div></div>"
+            }' class="hidden" id="dosen" name="dosen" required>
+            <option value="">Pilih dosen</option>
+            @foreach ($dosen as $data)
             <option value="{{ $data->id }}">
-              {{ $data->kode_dosen .
-                  ' - ' .
-                  $data->nama_dosen .
-                  ' - ' .
-                  $data->nama_jurusan_binaan .
-                  ' - ' .
-                  $data->nama_area_kampus }}
+              {{ $data->kode_dosen . ' - ' . $data->nama_dosen . ' - ' . $data->nama_jurusan_binaan . ' - ' . $data->nama_area_kampus }}
             </option>
-          @endforeach
-        </select>
+            @endforeach
+          </select>
+
+          <div class="absolute top-1/2 end-3 -translate-y-1/2">
+            <svg class="flex-shrink-0 size-3.5 text-gray-500 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+          </div>
+        </div>
       </div>
 
       <div class="flex justify-end">
@@ -190,7 +210,7 @@
         @foreach ($pertanyaan as $nomor => $data)
           <div class="flex flex-col border rounded-xl border-black p-8 mt-4">
             <div class="text-center content-center justify-items-center">
-              <p class="font-bold text-center uppercase text-black">{{ $data->pertanyaan }}</p>
+              <p class="font-bold text-center uppercase text-black">{{ $data->pertanyaan }} <span class="text-red-500">*</span></p>
             </div>
             <div class="flex flex-col md:flex-row mt-6 gap-4 items-center justify-center">
               <div class="flex text-xs text-center uppercase font-medium">
@@ -222,7 +242,7 @@
 
       <div class="border border-gray-800 p-6 rounded-2xl mt-4">
         <label for="komentar" class="block mb-2.5 font-bold text-gray-900 dark:text-black">
-          Komentar atau saran
+          Komentar atau saran <span class="text-red-500">*</span>
         </label>
 
         <textarea id="komentar" placeholder="Berikan komentar . . ." name="komentar" rows="4" required
@@ -333,22 +353,5 @@
         $('#questionnaire-1').show();
       });
     });
-  </script>
-
-  <script>
-    function filterOptions(inputTagName, selectName) {
-      const input = document.getElementById(inputTagName).value.toLowerCase();
-      const select = document.getElementById(selectName);
-      const options = select.getElementsByTagName('option');
-
-      for (let i = 0; i < options.length; i++) {
-        const text = options[i].textContent.toLowerCase();
-        if (text.includes(input)) {
-          options[i].style.display = '';
-        } else {
-          options[i].style.display = 'none';
-        }
-      }
-    }
   </script>
 @endsection

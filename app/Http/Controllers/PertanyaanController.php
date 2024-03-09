@@ -18,7 +18,7 @@ class PertanyaanController extends Controller
         return view('admin.data_pertanyaan', compact('pertanyaan'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $pertanyaan = new Pertanyaan();
         $pertanyaan->pertanyaan = $request->pertanyaan;
@@ -42,10 +42,10 @@ class PertanyaanController extends Controller
             'pertanyaan' => $request->pertanyaan,
         ]);
 
-        return redirect()->route('admin.pertanyaan')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('pertanyaan.index')->with('success', 'data berhasil diperbaharui');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $pertanyaan = Pertanyaan::where('id', $request->id);
@@ -57,7 +57,7 @@ class PertanyaanController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
         $pertanyaan = Pertanyaan::select('*')
             ->where('pertanyaan', 'LIKE', "%$request->cari%")

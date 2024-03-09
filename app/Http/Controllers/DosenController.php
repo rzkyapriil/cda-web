@@ -30,7 +30,7 @@ class DosenController extends Controller
         return view('admin.data_dosen', compact('dosen', 'binaan'));
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
         $dosen = Dosen::join('binaan', 'dosen.binaan_id', 'binaan.id')
             ->join('fakultas', 'binaan.fakultas_id', 'fakultas.id')
@@ -49,7 +49,7 @@ class DosenController extends Controller
         return view('admin.data_dosen', compact('dosen', 'binaan'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $dosen = new Dosen();
         $dosen->binaan_id = $request->binaan_id;
@@ -78,9 +78,9 @@ class DosenController extends Controller
             'nama_dosen' => $request->nama_dosen,
         ]);
 
-        return redirect()->route('admin.dosen')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('dosen.index')->with('success', 'data berhasil diperbaharui');
     }
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $dosen = Dosen::where('id', $request->id);
@@ -89,29 +89,5 @@ class DosenController extends Controller
         } catch (QueryException $e) {
             return redirect()->back()->with('errors', 'Data sudah berelasi dengan data lain!');
         }
-    }
-
-    // private function getDosen(int $idContact): Dosen
-    // {
-    //     $dosen = Dosen::where('user_id', $user->id)->where('id', $idContact)->first();
-    //     if (!$dosen) {
-    //         throw new HttpResponseException(response()->json([
-    //             'errors' => [
-    //                 "message" => [
-    //                     "not found"
-    //                 ]
-    //             ]
-    //         ])->setStatusCode(404));
-    //     }
-
-    //     return $dosen;
-    // }
-
-    public function list(): JsonResponse
-    {
-        // $user = Auth::user();
-        $dosen = Dosen::orderBy('id')->get();
-
-        return (DosenResource::collection($dosen))->response()->setStatusCode(200);
     }
 }

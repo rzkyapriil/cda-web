@@ -6,7 +6,7 @@
         <div class="flex flex-grow items-center mb-2">
             <h1 id="title" class="text-2xl font-bold text-center dark:text-white uppercase">Edit komunitas</h1>
         </div>
-        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('admin.update-komunitas', $komunitas->id) }}">
+        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('komunitas.update', $komunitas->id) }}">
             @csrf
             @method('PUT')
             <div>
@@ -75,7 +75,12 @@
             <div>
                 <label for="alokasi_site" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alokasi Site
                 </label>
-                <input type="text" id="alokasi_site" name="alokasi_site" placeholder="alokasi site" value="{{ $komunitas->alokasi_site }}" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <select type="text" id="alokasi_site" name="alokasi_site" placeholder="alokasi site" value="{{ $komunitas->alokasi_site }}" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    <option value="" disabled>Pilih Lokasi</option>
+                    @foreach($areas as $area)
+                    <option value="{{ $area->nama_area_kampus }}" {{ $komunitas->alokasi_site == $area->nama_area_kampus ? 'selected':'' }}>{{ $area->nama_area_kampus }}</option>
+                    @endforeach
+                </select>
             </div>
 
 

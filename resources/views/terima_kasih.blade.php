@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Terima kasih!')
+@section('title', 'Terima kasih! - Community Empowerment')
 
 @section('content')
-  <div class="min-h-screen mx-auto flex flex-col items-center">
+  <div class="min-h-[100dvh] mx-auto flex flex-col items-center">
     @include('components.header')
     <section class="flex flex-grow px-4 md:px-2 mb-12 max-w-5xl">
       <div class="flex flex-col mt-12 border border-black rounded-2xl p-8 h-fit">

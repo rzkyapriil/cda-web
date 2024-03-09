@@ -8,6 +8,8 @@ use App\Models\Dosen;
 use App\Models\Fakultas;
 use App\Models\JurusanBinaan;
 use App\Models\Questionnaire;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use COM;
 use DivisionByZeroError;
@@ -26,18 +28,18 @@ class HistoriPenilaianController extends Controller
         return view('admin.histori_penilaian', compact('area', 'jurusan', 'fakultas'));
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
-        $startDate = $request->tgl_mulai == null ? Carbon::now()->startOfMonth()->format('Y-m-d H:i:s') : $request->tgl_mulai;
-        $endDate = $request->tgl_selesai == null ? Carbon::now()->endOfMonth()->format('Y-m-d H:i:s') : $request->tgl_selesai;
+        $startDate = Carbon::parse($request->input('tgl_mulai'))->startOfDay()->format('Y-m-d H:i:s');
+        $endDate = Carbon::parse($request->input('tgl_selesai'))->endOfDay()->format('Y-m-d H:i:s');
 
         $area = DB::table('area_kampus')->select('*')->get();
         $jurusan = DB::table('jurusan_binaan')->select('*')->get();
         $fakultas = DB::table('fakultas')->select('*')->get();
 
-        $data_area = $request->area;
-        $data_fakultas = $request->fakultas;
-        $data_jurusan = $request->jurusan;
+        $data_area = $request->input('area');
+        $data_fakultas = $request->input('fakultas');
+        $data_jurusan = $request->input('jurusan');
         $data_tgl_mulai = $startDate;
         $data_tgl_selesai = $endDate;
 

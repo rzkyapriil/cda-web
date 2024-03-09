@@ -6,7 +6,7 @@
         <div class="flex flex-grow items-center mb-2">
             <h1 id="title" class="text-2xl font-bold text-center dark:text-white uppercase">edit dosen</h1>
         </div>
-        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('admin.update-dosen', $dosen->id) }}">
+        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('dosen.update', $dosen->id) }}">
             @csrf
             @method('PUT')
             <div>

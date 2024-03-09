@@ -20,7 +20,7 @@ class UserAuthController extends Controller
         if ($user && Auth::attempt(['username' => $data['username'], 'password' => $data['password']])) {
             $user->token = Str::uuid()->tostring();
             $user->save();
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard.index');
         } else {
             return redirect()->back()->with('errors', 'username atau password salah');
         }

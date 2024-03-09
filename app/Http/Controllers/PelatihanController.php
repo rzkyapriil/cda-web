@@ -19,7 +19,7 @@ class PelatihanController extends Controller
         return view('admin.data_pelatihan', compact('pelatihan'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $pelatihan = new Pelatihan();
         $pelatihan->judul_pelatihan = $request->judul_pelatihan;
@@ -43,10 +43,10 @@ class PelatihanController extends Controller
             'judul_pelatihan' => $request->judul_pelatihan,
         ]);
 
-        return redirect()->route('admin.pelatihan')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('pelatihan.index')->with('success', 'data berhasil diperbaharui');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $pelatihan = Pelatihan::where('id', $request->id);
@@ -57,7 +57,7 @@ class PelatihanController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
         $pelatihan = Pelatihan::select('*')
             ->where('pelatihan.judul_pelatihan', 'LIKE', "%$request->cari%")

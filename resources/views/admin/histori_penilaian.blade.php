@@ -2,18 +2,16 @@
 
 @section('main')
 @php
-use Carbon\Carbon;
-setlocale(LC_TIME, 'id_ID.utf8');
+  use Carbon\Carbon;
 @endphp
 <div class="flex-col flex mx-auto">
-  <div class="flex flex-col justify-center items-center border border-black rounded-2xl py-8 px-4">
+  <div class="flex flex-col justify-center items-center border border-black rounded-xl py-8 px-4">
     <div class="text-center content-center justify-items-center">
       <p class="text-2xl font-bold text-center uppercase text-black">History Penilaian</p>
     </div>
     <div class="flex flex-col mt-5 gap-6 w-full max-w-[480px] text-xs">
-      <form method="post" action="{{ route('admin.cari-histori-penilaian') }}"
+      <form method="get" action="{{ route('histori-penilaian.search') }}"
         class="flex flex-col w-full justify-center gap-3">
-        @csrf
         <div>
           <label for="area" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Area
             Kampus</label>
@@ -64,31 +62,27 @@ setlocale(LC_TIME, 'id_ID.utf8');
         <div class="flex flex-col sm:flex-row w-full gap-3">
           @if (!isset($data_tgl_mulai))
           <div class="w-full">
-            <label for="tgl_mulai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-              Mulai</label>
-            <input type="datetime-local" id="tgl_mulai" name="tgl_mulai"
+            <label for="tgl_mulai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Mulai</label>
+            <input type="date" id="tgl_mulai" name="tgl_mulai" value="{{ Carbon::now()->startOfMonth()->format('Y-m-d') }}"
               class="text-sm bg-gray-50 border border-black text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           @else
           <div class="w-full">
-            <label for="tgl_mulai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-              Mulai</label>
-            <input type="datetime-local" id="tgl_mulai" name="tgl_mulai" value="{{ $data_tgl_mulai }}"
+            <label for="tgl_mulai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Mulai</label>
+            <input type="date" id="tgl_mulai" name="tgl_mulai" value="{{ Carbon::parse($data_tgl_mulai)->format('Y-m-d') }}"
               class="text-sm bg-gray-50 border border-black text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           @endif
           @if (!isset($data_tgl_selesai))
           <div class="w-full">
-            <label for="tgl_selesai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-              Selesai</label>
-            <input type="datetime-local" id="tgl_selesai" name="tgl_selesai"
+            <label for="tgl_selesai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Selesai</label>
+            <input type="date" id="tgl_selesai" name="tgl_selesai" value="{{ Carbon::now()->endOfMonth()->format('Y-m-d') }}"
               class="text-sm bg-gray-50 border border-black text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           @else
           <div class="w-full">
-            <label for="tgl_selesai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-              Selesai</label>
-            <input type="datetime-local" id="tgl_selesai" name="tgl_selesai" value="{{ $data_tgl_selesai }}"
+            <label for="tgl_selesai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Selesai</label>
+            <input type="date" id="tgl_selesai" name="tgl_selesai" value="{{ Carbon::parse($data_tgl_selesai)->format('Y-m-d') }}"
               class="text-sm bg-gray-50 border border-black text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           @endif
@@ -103,41 +97,78 @@ setlocale(LC_TIME, 'id_ID.utf8');
     </div>
   </div>
   <div class="flex flex-col items-center justify-center h-fit mb-24 rounded bg-transparent my-10">
-    <div class="flex flex-col gap-2 text-sm font-medium w-full justify-center items-center mb-6">
-      @if (isset($data_area))
-      <div class="p-1.5 border border-black rounded-lg w-full text-center">
-        {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getArea($data_area)->nama_area_kampus }}
+    @if(isset($data_tgl_mulai) or isset($data_tgl_selesai))
+    <div class="flex flex-col gap-2.5 p-4 border border-black rounded-xl text-sm font-medium font-mono w-full justify-center items-center mb-6">
+      <div class="flex w-full">
+        <div class="w-40">
+          Area Kampus
+        </div>
+        @if (isset($data_area))
+        <div>
+          : {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getArea($data_area)->nama_area_kampus }}
+        </div>
+        @else
+        <div>
+          : Semua
+        </div>
+        @endif
       </div>
-      @endif
 
-      @if (isset($data_fakultas))
-      <div class="p-1.5 border border-black rounded-lg w-full text-center">
-        {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getFakultas($data_fakultas)->nama_fakultas }}
+      <div class="flex w-full">
+        <div class="w-40">
+          Fakultas
+        </div>
+        @if (isset($data_fakultas))
+        <div>
+          : {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getFakultas($data_fakultas)->nama_fakultas }}
+        </div>
+        @else
+        <div>
+          : Semua
+        </div>
+        @endif
       </div>
-      @endif
-
-      @if (isset($data_jurusan))
-      <div class="p-1.5 border border-black rounded-lg w-full text-center">
-        {{
-        app()->make('App\Http\Controllers\HistoriPenilaianController')->getJurusan($data_jurusan)->nama_jurusan_binaan
-        }}
+     
+      <div class="flex w-full">
+        <div class="w-40">
+          Jurusan Binaan
+        </div>
+        @if (isset($data_jurusan))
+        <div>
+          : {{ app()->make('App\Http\Controllers\HistoriPenilaianController')->getJurusan($data_jurusan)->nama_jurusan_binaan }}
+        </div>
+        @else
+        <div>
+          : Semua
+        </div>
+        @endif
       </div>
-      @endif
-
+      
       @if (isset($data_tgl_mulai))
-      <div class="p-1.5 border border-black rounded-lg w-full text-center">
-        {{ Carbon::parse($data_tgl_mulai)->translatedFormat('l, j F Y - H:i:s') }}
+      <div class="flex w-full spacing">
+        <div class="w-40">
+          Tanggal Mulai
+        </div>
+        <div>
+          : {{ Carbon::parse($data_tgl_mulai)->translatedFormat('l, j F Y - H:i:s') }}
+        </div>
       </div>
       @endif
 
       @if (isset($data_tgl_selesai))
-      <div class="p-1.5 border border-black rounded-lg w-full text-center">
-        {{ Carbon::parse($data_tgl_selesai)->translatedFormat('l, j F Y - H:i:s') }}
+      <div class="flex w-full">
+        <div class="w-40">
+          Tanggal Selesai
+        </div>
+        <div>
+          : {{ Carbon::parse($data_tgl_selesai)->translatedFormat('l, j F Y - H:i:s') }}
+        </div>
       </div>
       @endif
-
     </div>
-    <div id="chart" class="flex"></div>
+    @endif
+
+    <div id="chart" class="flex w-full h-80 md:h-96 lg:h-[560px]"></div>
 
     @if(isset($data_komunitas))
     <div class="flex gap-2 mb-8 text-sm font-medium w-full">
@@ -273,15 +304,15 @@ setlocale(LC_TIME, 'id_ID.utf8');
 
     var options = {
       title: 'Rata-rata Skor',
-      width: 800,
-      height: 480,
+      width: '100%',
+      height: '100%',
       bar: {
         groupWidth: "80%"
       },
       legend: {
         position: "none"
       },
-      backgroundColor: '#f0f0f0'
+      backgroundColor: '#f0f0f0',
     };
     var chart = new google.visualization.ColumnChart(document.getElementById("chart"));
     chart.draw(view, options);

@@ -15,7 +15,7 @@ class FakultasController extends Controller
         return view('admin.data_fakultas', compact('fakultas'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $fakultas = new Fakultas();
         $fakultas->nama_fakultas = $request->nama_fakultas;
@@ -39,9 +39,9 @@ class FakultasController extends Controller
             'nama_fakultas' => $request->nama_fakultas,
         ]);
 
-        return redirect()->route('admin.fakultas')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('fakultas.index')->with('success', 'data berhasil diperbaharui');
     }
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $fakultas = Fakultas::where('id', $request->id);
@@ -52,7 +52,7 @@ class FakultasController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
         $fakultas = Fakultas::select('*')->where('nama_fakultas', 'LIKE', "%$request->cari%")->paginate(10);
 

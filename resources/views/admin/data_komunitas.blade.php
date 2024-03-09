@@ -9,8 +9,8 @@
 
         <!-- Button with Modal -->
         <div class="flex justify-center lg:justify-end items-center gap-1.5 w-full">
-            <form method="get" action="{{ route('admin.cari-komunitas') }}" class="flex">
-                <input type="text" id="cari" name="cari" placeholder="cari data" class="bg-gray-50 border border-black text-gray-900 text-xs rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block w-60 h-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <form method="get" action="{{ route('komunitas.search') }}" class="flex w-full lg:w-auto">
+                <input type="text" id="cari" name="cari" placeholder="cari data" class="bg-gray-50 border border-black text-gray-900 text-xs rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-60 h-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <button type="submit" title="Cari" class="bg-black hover:bg-gray-800 text-xs text-white px-4 rounded-e-lg">Cari</button>
             </form>
 
@@ -37,7 +37,7 @@
                     <h1 class="my-4 text-lg text-center font-bold text-gray-900 dark:text-white uppercase">
                         Tambahkan Komunitas
                     </h1>
-                    <form class="space-y-6" method="POST" action="{{ route('admin.create-komunitas') }}">
+                    <form class="space-y-6" method="POST" action="{{ route('komunitas.store') }}">
                         @csrf
                         <div>
                             <label for="komunitas_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -105,7 +105,12 @@
                         <div>
                             <label for="alokasi_site" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alokasi Site
                             </label>
-                            <input type="text" id="alokasi_site" name="alokasi_site" placeholder="alokasi site" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                            <select type="text" id="alokasi_site" name="alokasi_site" placeholder="alokasi site" class="bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                <option value="" selected disabled>Pilih Lokasi</option>
+                                @foreach($areas as $area)
+                                <option value="{{ $area->nama_area_kampus }}">{{ $area->nama_area_kampus }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <button type="submit" class="w-full text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -237,13 +242,13 @@
                         {{ $data->alokasi_site }}
                     </td>
                     <td class="px-2.5 py-2 text-right flex justify-end">
-                        <form method="POST" action="{{ route('admin.edit-komunitas', $data->id) }}">
+                        <form method="POST" action="{{ route('komunitas.edit', $data->id) }}">
                             @csrf
                             <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4 bg-none">
                                 Edit
                             </button>
                         </form>
-                        <form method="POST" action="{{ route('admin.delete-komunitas', $data->id) }}">
+                        <form method="POST" action="{{ route('komunitas.destroy', $data->id) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>

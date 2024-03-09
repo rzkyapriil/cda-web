@@ -6,7 +6,7 @@
         <div class="flex flex-grow items-center mb-2">
             <h1 id="title" class="text-2xl font-bold text-center dark:text-white uppercase">edit jurusan</h1>
         </div>
-        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('admin.update-jurusan-binaan', $jurusan_binaan->id) }}">
+        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('jurusan-binaan.update', $jurusan_binaan->id) }}">
             @csrf
             @method('PUT')
             <div>

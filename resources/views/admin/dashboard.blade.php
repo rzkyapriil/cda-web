@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <a href="{{ route('admin.komunitas') }}"
+    <a href="{{ route('komunitas.index') }}"
       class="flex items-center justify-center rounded-xl bg-white hover:bg-blue-50 py-8 border border-black">
       <div class="flex px-8 w-fit justify-center items-center">
         <svg class="h-12" viewBox="0 0 87 97" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +31,7 @@
       </div>
     </a>
 
-    <a href="{{ route('admin.dosen') }}"
+    <a href="{{ route('dosen.index') }}"
       class="flex items-center justify-center rounded-xl bg-white hover:bg-blue-50 py-8 border border-black">
       <div class="flex px-8 w-fit justify-center items-center">
         <svg class="h-14" viewBox="0 0 87 97" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@
       </div>
     </a>
 
-    <a href="{{ route('admin.pelatihan') }}"
+    <a href="{{ route('pelatihan.index') }}"
       class="flex items-center justify-center rounded-xl bg-white hover:bg-blue-50 py-8 border border-black">
       <div class="flex px-8 w-fit justify-center items-center">
         <svg class="h-14" viewBox="0 0 87 97" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,13 +79,13 @@
         Filter Data
       </div>
 
-      <form method="get" action="{{ route('admin.filter-dashboard') }}"
+      <form method="get" action="{{ route('dashboard.filter') }}"
         class="flex flex-col lg:flex-row gap-2 w-full lg:w-fit">
         <div class="flex w-full">
-          <div class="w-full lg:w-48">
+          <div class="w-full lg:w-36">
             <label for="tgl_mulai" class="hidden mb-2 text-xs font-medium text-gray-900 dark:text-white">Tanggal
               Mulai</label>
-            <input type="datetime-local" id="tgl_mulai" name="tgl_mulai" value="{{ $startDate }}"
+            <input type="date" id="tgl_mulai" name="tgl_mulai" value="{{ \Carbon\Carbon::parse($startDate)->format('Y-m-d') }}"
               class="text-xs md:text-sm text-center bg-gray-50 border border-black text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
 
@@ -95,10 +95,10 @@
             </svg>
           </div>
 
-          <div class="w-full lg:w-48">
+          <div class="w-full lg:w-36">
             <label for="tgl_selesai" class="hidden mb-2 text-xs font-medium text-gray-900 dark:text-white">Tanggal
               Selesai</label>
-            <input type="datetime-local" id="tgl_selesai" name="tgl_selesai" value="{{ $endDate }}"
+            <input type="date" id="tgl_selesai" name="tgl_selesai" value="{{ \Carbon\Carbon::parse($endDate)->format('Y-m-d') }}"
               class="text-xs md:text-sm text-center bg-gray-50 border border-black text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
         </div>
@@ -112,7 +112,7 @@
       </form>
 
 
-      <form method="get" action="{{ route('admin.export-dashboard') }}" class="flex w-full lg:w-fit">
+      <form method="get" action="{{ route('dashboard.export') }}" class="flex w-full lg:w-fit">
         <input type="hidden" name="startDate" value="{{ $startDate }}" />
         <input type="hidden" name="endDate" value="{{ $endDate }}" />
         <button type="submit" id="export-process"
@@ -169,11 +169,11 @@
               </td>
               @for ($i = 1; $i <= $jumlah_nilai; $i++)
                 <td class="px-4 py-2">
-                  {{ app()->make('App\Http\Controllers\AdminController')->getNilaiPerArea($startDate, $endDate, $data->id, $i) }}%
+                  {{ app()->make('App\Http\Controllers\DashboardController')->getNilaiPerArea($startDate, $endDate, $data->id, $i) }}%
                 </td>
               @endfor
               <td class="px-4 py-2">
-                {{ app()->make('App\Http\Controllers\AdminController')->getTotalNilaiPerArea($startDate, $endDate, $data->id) }}
+                {{ app()->make('App\Http\Controllers\DashboardController')->getTotalNilaiPerArea($startDate, $endDate, $data->id) }}
               </td>
             </tr>
           @endforeach
@@ -218,11 +218,11 @@
               </td>
               @for ($i = 1; $i <= $jumlah_nilai; $i++)
                 <td class="px-4 py-2">
-                  {{ app()->make('App\Http\Controllers\AdminController')->getNilaiPerFakultas($startDate, $endDate, $data->id, $i) }}%
+                  {{ app()->make('App\Http\Controllers\DashboardController')->getNilaiPerFakultas($startDate, $endDate, $data->id, $i) }}%
                 </td>
               @endfor
               <td class="px-4 py-2">
-                {{ app()->make('App\Http\Controllers\AdminController')->getTotalNilaiPerFakultas($startDate, $endDate, $data->id) }}
+                {{ app()->make('App\Http\Controllers\DashboardController')->getTotalNilaiPerFakultas($startDate, $endDate, $data->id) }}
               </td>
             </tr>
           @endforeach
@@ -267,11 +267,11 @@
               </td>
               @for ($i = 1; $i <= $jumlah_nilai; $i++)
                 <td class="px-4 py-2">
-                  {{ app()->make('App\Http\Controllers\AdminController')->getNilaiPerJurusan($startDate, $endDate, $data->id, $i) }}%
+                  {{ app()->make('App\Http\Controllers\DashboardController')->getNilaiPerJurusan($startDate, $endDate, $data->id, $i) }}%
                 </td>
               @endfor
               <td class="px-4 py-2">
-                {{ app()->make('App\Http\Controllers\AdminController')->getTotalNilaiPerJurusan($startDate, $endDate, $data->id) }}
+                {{ app()->make('App\Http\Controllers\DashboardController')->getTotalNilaiPerJurusan($startDate, $endDate, $data->id) }}
               </td>
             </tr>
           @endforeach
@@ -297,9 +297,6 @@
           success: function(response) {
             $('#status').hide();
             $('#status').text(response.message);
-            // $('#tabel_area').show();
-            // $('#tabel_fakultas').show();
-            // $('#tabel_jurusan').show();
           },
           error: function(xhr, status, error) {
             $('#status').text('Terjadi kesalahan: ' + error);

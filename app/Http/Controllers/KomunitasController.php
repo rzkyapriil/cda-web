@@ -6,17 +6,19 @@ use App\Models\Komunitas;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KomunitasController extends Controller
 {
     public function index()
     {
-        $komunitas = Komunitas::select('*')
+        $areas = DB::table('area_kampus')->select('area_kampus.nama_area_kampus')->get();
+        $komunitas = DB::table('komunitas')->select('*')
             ->paginate(10);
-        return view('admin.data_komunitas', compact('komunitas'));
+        return view('admin.data_komunitas', compact('komunitas', 'areas'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $komunitas = new Komunitas();
         $komunitas->komunitas_id = $request->komunitas_id;
@@ -38,9 +40,10 @@ class KomunitasController extends Controller
     public function edit(Request $request)
     {
         $user = Auth::user();
+        $areas = DB::table('area_kampus')->select('area_kampus.nama_area_kampus')->get();
         $komunitas = Komunitas::where('id', $request->id)->first();
 
-        return view('admin.edit_komunitas', compact('user', 'komunitas'));
+        return view('admin.edit_komunitas', compact('user', 'komunitas', 'areas'));
     }
 
     public function update(Request $request)
@@ -60,9 +63,9 @@ class KomunitasController extends Controller
             'alokasi_site' => $request->alokasi_site
         ]);
 
-        return redirect()->route('admin.komunitas')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('komunitas.index')->with('success', 'data berhasil diperbaharui');
     }
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $komunitas = Komunitas::where('id', $request->id);
@@ -73,8 +76,9 @@ class KomunitasController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
+        $areas = DB::table('area_kampus')->select('area_kampus.nama_area_kampus')->get();
         $komunitas = Komunitas::select('*')
             ->where('komunitas_id', 'LIKE', "%$request->cari%")
             ->orwhere('mitra', 'LIKE', "%$request->cari%")
@@ -82,8 +86,9 @@ class KomunitasController extends Controller
             ->orwhere('jenis_usaha', 'LIKE', "%$request->cari%")
             ->orwhere('jenis_komunitas', 'LIKE', "%$request->cari%")
             ->orwhere('email', 'LIKE', "%$request->cari%")
+            ->orwhere('alokasi_site', 'LIKE', "%$request->cari%")
             ->paginate(10);
 
-        return view('admin.data_komunitas', compact('komunitas'));
+        return view('admin.data_komunitas', compact('komunitas', 'areas'));
     }
 }

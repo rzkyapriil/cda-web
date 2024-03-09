@@ -8,7 +8,7 @@
                 Edit area kampus
             </h1>
         </div>
-        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('admin.update-area-kampus', $area_kampus->id) }}">
+        <form class="flex flex-col gap-5 w-full" method="POST" action="{{ route('area-kampus.update', $area_kampus->id) }}">
             @csrf
             @method('PUT')
             <div>

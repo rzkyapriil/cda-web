@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Form Komunitas')
+@section('title', 'Form Komunitas - Community Empowerment')
 
 @section('content')
-  <div class="min-h-screen mx-auto flex flex-col items-center">
+  <div class="min-h-[100dvh] mx-auto flex flex-col items-center">
     @include('components.header')
     <div class="flex flex-grow w-full">
       <div class="w-full">

@@ -15,7 +15,7 @@ class JurusanBinaanController extends Controller
         return view('admin.data_jurusan_binaan', compact('jurusan_binaan'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $jurusan_binaan = new JurusanBinaan();
         $jurusan_binaan->nama_jurusan_binaan = $request->nama_jurusan_binaan;
@@ -39,9 +39,9 @@ class JurusanBinaanController extends Controller
             'nama_jurusan_binaan' => $request->nama_jurusan_binaan,
         ]);
 
-        return redirect()->route('admin.jurusan-binaan')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('jurusan-binaan.index')->with('success', 'data berhasil diperbaharui');
     }
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $jurusan_binaan = JurusanBinaan::where('id', $request->id);
@@ -52,10 +52,10 @@ class JurusanBinaanController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
-        $jurusan_binaan = JurusanBinaan::select('*')->where('nama_fakultas', 'LIKE', "%$request->cari%")->paginate(10);
+        $jurusan_binaan = JurusanBinaan::select('*')->where('nama_jurusan_binaan', 'LIKE', "%$request->cari%")->paginate(10);
 
-        return view('admin.data_fakultas', compact('jurusan_binaan'));
+        return view('admin.data_jurusan_binaan', compact('jurusan_binaan'));
     }
 }

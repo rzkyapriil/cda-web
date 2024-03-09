@@ -9,8 +9,8 @@
 
         <!-- Button with Modal -->
         <div class="flex justify-center lg:justify-end items-center gap-1.5 w-full">
-            <form method="get" action="{{ route('admin.cari-pertanyaan') }}" class="flex">
-                <input type="text" id="cari" name="cari" placeholder="cari data" class="bg-gray-50 border border-black text-gray-900 text-xs rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block w-60 h-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <form method="get" action="{{ route('pertanyaan.search') }}" class="flex w-full lg:w-auto">
+                <input type="text" id="cari" name="cari" placeholder="cari data" class="bg-gray-50 border border-black text-gray-900 text-xs rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-60 h-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <button type="submit" title="Cari" class="bg-black hover:bg-gray-800 text-xs text-white px-4 rounded-e-lg">Cari</button>
             </form>
 
@@ -35,7 +35,7 @@
                 </button>
                 <div class="px-6 py-6 lg:px-8">
                     <h1 class="my-4 text-lg text-center font-bold text-gray-900 dark:text-white uppercase">Tambahkan pertanyaan</h1>
-                    <form class="space-y-6" method="POST" action="{{ route('admin.create-pertanyaan') }}">
+                    <form class="space-y-6" method="POST" action="{{ route('pertanyaan.store') }}">
                         @csrf
                         <div>
                             <label for="pertanyaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pertanyaan</label>
@@ -110,13 +110,13 @@
                         {{ $data->pertanyaan }}
                     </td>
                     <td class="px-4 py-2 text-right flex justify-end">
-                        <form method="POST" action="{{ route('admin.edit-pertanyaan', $data->id) }}">
+                        <form method="POST" action="{{ route('pertanyaan.edit', $data->id) }}">
                             @csrf
                             <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4 bg-none">
                                 Edit
                             </button>
                         </form>
-                        <form method="POST" action="{{ route('admin.delete-pertanyaan', $data->id) }}">
+                        <form method="POST" action="{{ route('pertanyaan.destroy', $data->id) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>

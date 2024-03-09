@@ -16,7 +16,7 @@ class AreaKampusController extends Controller
         return view('admin.data_area_kampus', compact('area_kampus'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $area_kampus = new AreaKampus();
         $area_kampus->nama_area_kampus = $request->nama_area_kampus;
@@ -40,10 +40,10 @@ class AreaKampusController extends Controller
             'nama_area_kampus' => $request->nama_area_kampus,
         ]);
 
-        return redirect()->route('admin.area-kampus')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('area-kampus.index')->with('success', 'data berhasil diperbaharui');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $area_kampus = AreaKampus::where('id', $request->id);
@@ -54,7 +54,7 @@ class AreaKampusController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
         $area_kampus = AreaKampus::select('*')
             ->where('nama_area_kampus', 'LIKE', "%$request->cari%")

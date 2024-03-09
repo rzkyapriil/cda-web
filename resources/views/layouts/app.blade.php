@@ -22,19 +22,21 @@
   </body>
 
   <script>
-    var sa = document.getElementById('alert-success');
-    var ea = document.getElementById('alert-errors');
-    
-    setTimeout(function() {
-      removeElement(sa);
-    }, 3000);
+    $(document).ready(function() {
+      var sa = document.getElementById('alert-success');
+      var ea = document.getElementById('alert-errors');
+      
+      setTimeout(function() {
+        removeElement(sa);
+      }, 3000);
 
-    setTimeout(function() {
-      removeElement(ea);
-    }, 3000);
+      setTimeout(function() {
+        removeElement(ea);
+      }, 3000);
 
-    function removeElement(element) {
-      element.parentNode.removeChild(element);
-    }
+      function removeElement(element) {
+        element.parentNode.removeChild(element);
+      }
+    });
   </script>
 </html>

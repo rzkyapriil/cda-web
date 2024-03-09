@@ -2,7 +2,7 @@
 @section('title', 'Community Empowerment')
 
 @section('content')
-  <div class="min-h-screen min-w-full flex flex-col">
+  <div class="min-h-[100dvh] w-full flex flex-col">
 
     @include('components.header')
 

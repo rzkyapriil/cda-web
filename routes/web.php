@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/terima-kasih', [\App\Http\Controllers\HomeController::class, 'terima'])->name('terima-kasih');
 
 Route::get('/questionnaire', [\App\Http\Controllers\QuestionnaireController::class, 'index'])->name('questionnaire');
 Route::post('/questionnaire', [\App\Http\Controllers\QuestionnaireController::class, 'store'])->name('questionnaire.store');
@@ -28,68 +27,68 @@ Route::post('/form-komunitas', [\App\Http\Controllers\FormKomunitasController::c
 Route::post('/login', [\App\Http\Controllers\UserAuthController::class, 'login'])->name('users.login');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/dashboard/filter', [\App\Http\Controllers\AdminController::class, 'filter'])->name('admin.filter-dashboard');
-    Route::get('/admin/dashboard/export', [\App\Http\Controllers\AdminController::class, 'export'])->name('admin.export-dashboard');
+    Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/admin/dashboard/filter', [\App\Http\Controllers\DashboardController::class, 'filter'])->name('dashboard.filter');
+    Route::get('/admin/dashboard/export', [\App\Http\Controllers\DashboardController::class, 'export'])->name('dashboard.export');
 
-    Route::get('/admin/dosen', [\App\Http\Controllers\DosenController::class, 'index'])->name('admin.dosen');
-    Route::post('/admin/dosen', [\App\Http\Controllers\DosenController::class, 'create'])->name('admin.create-dosen');
-    Route::post('/admin/dosen/{id}/edit', [\App\Http\Controllers\DosenController::class, 'edit'])->name('admin.edit-dosen');
-    Route::put('/admin/dosen/{id}/update', [\App\Http\Controllers\DosenController::class, 'update'])->name('admin.update-dosen');
-    Route::delete('/admin/dosen/{id}/delete', [\App\Http\Controllers\DosenController::class, 'delete'])->name('admin.delete-dosen');
-    Route::get('/admin/dosen/cari', [\App\Http\Controllers\DosenController::class, 'cari'])->name('admin.cari-dosen');
+    Route::get('/admin/dosen', [\App\Http\Controllers\DosenController::class, 'index'])->name('dosen.index');
+    Route::post('/admin/dosen', [\App\Http\Controllers\DosenController::class, 'store'])->name('dosen.store');
+    Route::post('/admin/dosen/{id}/edit', [\App\Http\Controllers\DosenController::class, 'edit'])->name('dosen.edit');
+    Route::put('/admin/dosen/{id}', [\App\Http\Controllers\DosenController::class, 'update'])->name('dosen.update');
+    Route::delete('/admin/dosen/{id}', [\App\Http\Controllers\DosenController::class, 'destroy'])->name('dosen.destroy');
+    Route::get('/admin/dosen/search', [\App\Http\Controllers\DosenController::class, 'search'])->name('dosen.search');
 
-    Route::get('/admin/fakultas', [\App\Http\Controllers\FakultasController::class, 'index'])->name('admin.fakultas');
-    Route::post('/admin/fakultas', [\App\Http\Controllers\FakultasController::class, 'create'])->name('admin.create-fakultas');
-    Route::post('/admin/fakultas/{id}/edit', [\App\Http\Controllers\FakultasController::class, 'edit'])->name('admin.edit-fakultas');
-    Route::put('/admin/fakultas/{id}/update', [\App\Http\Controllers\FakultasController::class, 'update'])->name('admin.update-fakultas');
-    Route::delete('/admin/fakultas/{id}/delete', [\App\Http\Controllers\FakultasController::class, 'delete'])->name('admin.delete-fakultas');
-    Route::get('/admin/fakultas/cari', [\App\Http\Controllers\FakultasController::class, 'cari'])->name('admin.cari-fakultas');
+    Route::get('/admin/fakultas', [\App\Http\Controllers\FakultasController::class, 'index'])->name('fakultas.index');
+    Route::post('/admin/fakultas', [\App\Http\Controllers\FakultasController::class, 'store'])->name('fakultas.store');
+    Route::post('/admin/fakultas/{id}/edit', [\App\Http\Controllers\FakultasController::class, 'edit'])->name('fakultas.edit');
+    Route::put('/admin/fakultas/{id}', [\App\Http\Controllers\FakultasController::class, 'update'])->name('fakultas.update');
+    Route::delete('/admin/fakultas/{id}', [\App\Http\Controllers\FakultasController::class, 'destroy'])->name('fakultas.destroy');
+    Route::get('/admin/fakultas/search', [\App\Http\Controllers\FakultasController::class, 'search'])->name('fakultas.search');
 
-    Route::get('/admin/jurusan-binaan', [\App\Http\Controllers\JurusanBinaanController::class, 'index'])->name('admin.jurusan-binaan');
-    Route::post('/admin/jurusan-binaan', [\App\Http\Controllers\JurusanBinaanController::class, 'create'])->name('admin.create-jurusan-binaan');
-    Route::post('/admin/jurusan-binaan/{id}/edit', [\App\Http\Controllers\JurusanBinaanController::class, 'edit'])->name('admin.edit-jurusan-binaan');
-    Route::put('/admin/jurusan-binaan/{id}/update', [\App\Http\Controllers\JurusanBinaanController::class, 'update'])->name('admin.update-jurusan-binaan');
-    Route::delete('/admin/jurusan-binaan/{id}/delete', [\App\Http\Controllers\JurusanBinaanController::class, 'delete'])->name('admin.delete-jurusan-binaan');
-    Route::get('/admin/jurusan-binaan/cari', [\App\Http\Controllers\JurusanBinaanController::class, 'cari'])->name('admin.cari-jurusan-binaan');
+    Route::get('/admin/jurusan-binaan', [\App\Http\Controllers\JurusanBinaanController::class, 'index'])->name('jurusan-binaan.index');
+    Route::post('/admin/jurusan-binaan', [\App\Http\Controllers\JurusanBinaanController::class, 'store'])->name('jurusan-binaan.store');
+    Route::post('/admin/jurusan-binaan/{id}/edit', [\App\Http\Controllers\JurusanBinaanController::class, 'edit'])->name('jurusan-binaan.edit');
+    Route::put('/admin/jurusan-binaan/{id}', [\App\Http\Controllers\JurusanBinaanController::class, 'update'])->name('jurusan-binaan.update');
+    Route::delete('/admin/jurusan-binaan/{id}', [\App\Http\Controllers\JurusanBinaanController::class, 'destroy'])->name('jurusan-binaan.destroy');
+    Route::get('/admin/jurusan-binaan/search', [\App\Http\Controllers\JurusanBinaanController::class, 'search'])->name('jurusan-binaan.search');
 
-    Route::get('/admin/binaan', [\App\Http\Controllers\BinaanController::class, 'index'])->name('admin.binaan');
-    Route::post('/admin/binaan', [\App\Http\Controllers\BinaanController::class, 'create'])->name('admin.create-binaan');
-    Route::post('/admin/binaan/{id}/edit', [\App\Http\Controllers\BinaanController::class, 'edit'])->name('admin.edit-binaan');
-    Route::put('/admin/binaan/{id}/update', [\App\Http\Controllers\BinaanController::class, 'update'])->name('admin.update-binaan');
-    Route::delete('/admin/binaan/{id}/delete', [\App\Http\Controllers\BinaanController::class, 'delete'])->name('admin.delete-binaan');
-    Route::get('/admin/binaan/cari', [\App\Http\Controllers\BinaanController::class, 'cari'])->name('admin.cari-binaan');
+    Route::get('/admin/binaan', [\App\Http\Controllers\BinaanController::class, 'index'])->name('binaan.index');
+    Route::post('/admin/binaan', [\App\Http\Controllers\BinaanController::class, 'store'])->name('binaan.store');
+    Route::post('/admin/binaan/{id}/edit', [\App\Http\Controllers\BinaanController::class, 'edit'])->name('binaan.edit');
+    Route::put('/admin/binaan/{id}', [\App\Http\Controllers\BinaanController::class, 'update'])->name('binaan.update');
+    Route::delete('/admin/binaan/{id}', [\App\Http\Controllers\BinaanController::class, 'destroy'])->name('binaan.destroy');
+    Route::get('/admin/binaan/search', [\App\Http\Controllers\BinaanController::class, 'search'])->name('binaan.search');
 
-    Route::get('/admin/area-kampus', [\App\Http\Controllers\AreaKampusController::class, 'index'])->name('admin.area-kampus');
-    Route::post('/admin/area-kampus', [\App\Http\Controllers\AreaKampusController::class, 'create'])->name('admin.create-area-kampus');
-    Route::post('/admin/area-kampus/{id}/edit', [\App\Http\Controllers\AreaKampusController::class, 'edit'])->name('admin.edit-area-kampus');
-    Route::put('/admin/area-kampus/{id}/update', [\App\Http\Controllers\AreaKampusController::class, 'update'])->name('admin.update-area-kampus');
-    Route::delete('/admin/area-kampus/{id}/delete', [\App\Http\Controllers\AreaKampusController::class, 'delete'])->name('admin.delete-area-kampus');
-    Route::get('/admin/area-kampus/cari', [\App\Http\Controllers\AreaKampusController::class, 'cari'])->name('admin.cari-area-kampus');
+    Route::get('/admin/area-kampus', [\App\Http\Controllers\AreaKampusController::class, 'index'])->name('area-kampus.index');
+    Route::post('/admin/area-kampus', [\App\Http\Controllers\AreaKampusController::class, 'store'])->name('area-kampus.store');
+    Route::post('/admin/area-kampus/{id}/edit', [\App\Http\Controllers\AreaKampusController::class, 'edit'])->name('area-kampus.edit');
+    Route::put('/admin/area-kampus/{id}', [\App\Http\Controllers\AreaKampusController::class, 'update'])->name('area-kampus.update');
+    Route::delete('/admin/area-kampus/{id}', [\App\Http\Controllers\AreaKampusController::class, 'destroy'])->name('area-kampus.destroy');
+    Route::get('/admin/area-kampus/search', [\App\Http\Controllers\AreaKampusController::class, 'search'])->name('area-kampus.search');
 
-    Route::get('/admin/pelatihan', [\App\Http\Controllers\PelatihanController::class, 'index'])->name('admin.pelatihan');
-    Route::post('/admin/pelatihan', [\App\Http\Controllers\PelatihanController::class, 'create'])->name('admin.create-pelatihan');
-    Route::post('/admin/pelatihan/{id}/edit', [\App\Http\Controllers\PelatihanController::class, 'edit'])->name('admin.edit-pelatihan');
-    Route::put('/admin/pelatihan/{id}/update', [\App\Http\Controllers\PelatihanController::class, 'update'])->name('admin.update-pelatihan');
-    Route::delete('/admin/pelatihan/{id}/delete', [\App\Http\Controllers\PelatihanController::class, 'delete'])->name('admin.delete-pelatihan');
-    Route::get('/admin/pelatihan/cari', [\App\Http\Controllers\PelatihanController::class, 'cari'])->name('admin.cari-pelatihan');
+    Route::get('/admin/pelatihan', [\App\Http\Controllers\PelatihanController::class, 'index'])->name('pelatihan.index');
+    Route::post('/admin/pelatihan', [\App\Http\Controllers\PelatihanController::class, 'store'])->name('pelatihan.store');
+    Route::post('/admin/pelatihan/{id}/edit', [\App\Http\Controllers\PelatihanController::class, 'edit'])->name('pelatihan.edit');
+    Route::put('/admin/pelatihan/{id}', [\App\Http\Controllers\PelatihanController::class, 'update'])->name('pelatihan.update');
+    Route::delete('/admin/pelatihan/{id}', [\App\Http\Controllers\PelatihanController::class, 'destroy'])->name('pelatihan.destroy');
+    Route::get('/admin/pelatihan/search', [\App\Http\Controllers\PelatihanController::class, 'search'])->name('pelatihan.search');
 
-    Route::get('/admin/komunitas', [\App\Http\Controllers\KomunitasController::class, 'index'])->name('admin.komunitas');
-    Route::post('/admin/komunitas', [\App\Http\Controllers\KomunitasController::class, 'create'])->name('admin.create-komunitas');
-    Route::post('/admin/komunitas/{id}/edit', [\App\Http\Controllers\KomunitasController::class, 'edit'])->name('admin.edit-komunitas');
-    Route::put('/admin/komunitas/{id}/update', [\App\Http\Controllers\KomunitasController::class, 'update'])->name('admin.update-komunitas');
-    Route::delete('/admin/komunitas/{id}/delete', [\App\Http\Controllers\KomunitasController::class, 'delete'])->name('admin.delete-komunitas');
-    Route::get('/admin/komunitas/cari', [\App\Http\Controllers\KomunitasController::class, 'cari'])->name('admin.cari-komunitas');
+    Route::get('/admin/komunitas', [\App\Http\Controllers\KomunitasController::class, 'index'])->name('komunitas.index');
+    Route::post('/admin/komunitas', [\App\Http\Controllers\KomunitasController::class, 'store'])->name('komunitas.store');
+    Route::post('/admin/komunitas/{id}/edit', [\App\Http\Controllers\KomunitasController::class, 'edit'])->name('komunitas.edit');
+    Route::put('/admin/komunitas/{id}', [\App\Http\Controllers\KomunitasController::class, 'update'])->name('komunitas.update');
+    Route::delete('/admin/komunitas/{id}', [\App\Http\Controllers\KomunitasController::class, 'destroy'])->name('komunitas.destroy');
+    Route::get('/admin/komunitas/search', [\App\Http\Controllers\KomunitasController::class, 'search'])->name('komunitas.search');
 
-    Route::get('/admin/pertanyaan', [\App\Http\Controllers\PertanyaanController::class, 'index'])->name('admin.pertanyaan');
-    Route::post('/admin/pertanyaan', [\App\Http\Controllers\PertanyaanController::class, 'create'])->name('admin.create-pertanyaan');
-    Route::post('/admin/pertanyaan/{id}/edit', [\App\Http\Controllers\PertanyaanController::class, 'edit'])->name('admin.edit-pertanyaan');
-    Route::put('/admin/pertanyaan/{id}/update', [\App\Http\Controllers\PertanyaanController::class, 'update'])->name('admin.update-pertanyaan');
-    Route::delete('/admin/pertanyaan/{id}/delete', [\App\Http\Controllers\PertanyaanController::class, 'delete'])->name('admin.delete-pertanyaan');
-    Route::get('/admin/pertanyaan/cari', [\App\Http\Controllers\PertanyaanController::class, 'cari'])->name('admin.cari-pertanyaan');
+    Route::get('/admin/pertanyaan', [\App\Http\Controllers\PertanyaanController::class, 'index'])->name('pertanyaan.index');
+    Route::post('/admin/pertanyaan', [\App\Http\Controllers\PertanyaanController::class, 'store'])->name('pertanyaan.store');
+    Route::post('/admin/pertanyaan/{id}/edit', [\App\Http\Controllers\PertanyaanController::class, 'edit'])->name('pertanyaan.edit');
+    Route::put('/admin/pertanyaan/{id}', [\App\Http\Controllers\PertanyaanController::class, 'update'])->name('pertanyaan.update');
+    Route::delete('/admin/pertanyaan/{id}', [\App\Http\Controllers\PertanyaanController::class, 'destroy'])->name('pertanyaan.destroy');
+    Route::get('/admin/pertanyaan/search', [\App\Http\Controllers\PertanyaanController::class, 'search'])->name('pertanyaan.search');
 
-    Route::get('/admin/histori-penilaian', [\App\Http\Controllers\HistoriPenilaianController::class, 'index'])->name('admin.histori-penilaian');
-    Route::post('/admin/histori-penilaian/cari', [\App\Http\Controllers\HistoriPenilaianController::class, 'cari'])->name('admin.cari-histori-penilaian');
+    Route::get('/admin/histori-penilaian', [\App\Http\Controllers\HistoriPenilaianController::class, 'index'])->name('histori-penilaian.index');
+    Route::get('/admin/histori-penilaian/search', [\App\Http\Controllers\HistoriPenilaianController::class, 'search'])->name('histori-penilaian.search');
 
     Route::post('/logout', [\App\Http\Controllers\UserAuthController::class, 'logout'])->name('users.logout');
 });

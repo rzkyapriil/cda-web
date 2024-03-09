@@ -27,7 +27,7 @@ class BinaanController extends Controller
         return view('admin.data_binaan', compact('binaan', 'fakultas', 'jurusan_binaan', 'area_kampus'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $binaan = new Binaan();
         $binaan->fakultas_id = $request->fakultas_id;
@@ -60,10 +60,10 @@ class BinaanController extends Controller
             'area_kampus_id' => $request->area_kampus_id,
         ]);
 
-        return redirect()->route('admin.binaan')->with('success', 'data berhasil diperbaharui');
+        return redirect()->route('binaan.index')->with('success', 'data berhasil diperbaharui');
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $binaan = Binaan::where('id', $request->id);
@@ -74,7 +74,7 @@ class BinaanController extends Controller
         }
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
         $fakultas = Fakultas::select('*')->get();
         $jurusan_binaan = JurusanBinaan::select('*')->get();
@@ -88,6 +88,7 @@ class BinaanController extends Controller
             ->where('fakultas.nama_fakultas', 'LIKE', "%$request->cari%")
             ->orWhere('jurusan_binaan.nama_jurusan_binaan', 'LIKE', "%$request->cari%")
             ->orWhere('area_kampus.nama_area_kampus', 'LIKE', "%$request->cari%")
+            ->orWhere('binaan.program_binaan', 'LIKE', "%$request->cari%")
             ->paginate(10);
 
         return view('admin.data_binaan', compact('binaan', 'fakultas', 'jurusan_binaan', 'area_kampus'));

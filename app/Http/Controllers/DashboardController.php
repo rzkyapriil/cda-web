@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AreaKampus;
-use App\Models\Dosen;
-use App\Models\Fakultas;
-use App\Models\JurusanBinaan;
-use App\Models\Komunitas;
-use App\Models\Pelatihan;
-use App\Models\Questionnaire;
 use Carbon\Carbon;
 use DivisionByZeroError;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Termwind\Components\Dd;
 
-class AdminController extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {
@@ -53,8 +46,8 @@ class AdminController extends Controller
 
     public function filter(Request $request)
     {
-        $startDate =  $request->tgl_mulai;
-        $endDate = $request->tgl_selesai;
+        $startDate =  Carbon::parse($request->tgl_mulai)->startOfDay()->format('Y-m-d H:i:s');
+        $endDate = Carbon::parse($request->tgl_selesai)->endOfDay()->format('Y-m-d H:i:s');
 
         $komunitas = DB::table('komunitas')->count();
         $pelatihan = DB::table('pelatihan')->count();
@@ -289,8 +282,6 @@ class AdminController extends Controller
             ->select('komentar.*')
             ->first();
 
-        // dd($data);
-
         return $data;
     }
 
@@ -301,15 +292,34 @@ class AdminController extends Controller
             ->whereBetween('questionnaire.created_at', [$request->startDate, $request->endDate])
             ->distinct('anon_user')
             ->get();
-        $file_path_save = storage_path('app/template/test.xlsx');
-        $file_path = storage_path('app/template/data.xlsx');
 
-        $spreadsheet = IOFactory::load($file_path);
+        $file_path_save = storage_path('app/template/download.xlsx');
+
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // dd($data_quiz);
         $startDate = $request->startDate;
         $endDate = $request->endDate;
+
+        // Header
+        $sheet->setCellValue('A1', 'Nomor');
+        $sheet->setCellValue('B1', 'Tanggal Pelaksanaan');
+        $sheet->setCellValue('C1', 'Judul Pelatihan ');
+        $sheet->setCellValue('D1', 'Nama Komunitas');
+        $sheet->setCellValue('E1', 'Jenis Komunitas');
+        $sheet->setCellValue('F1', 'Kode Dosen ');
+        $sheet->setCellValue('G1', 'Nama Dosen');
+        $sheet->setCellValue('H1', 'Area Kampus');
+        $sheet->setCellValue('I1', 'Jurusan Binaan ');
+
+        $sheet->setCellValue('J1', 'Manajemen kegiatan Pengabdian yang efektif bagi masyarakat luas');
+        $sheet->setCellValue('K1', 'Memfasilitasi kegiatan yang sesuai dengan kebutuhan masyarakat terkini');
+        $sheet->setCellValue('L1', 'Narasumber yang berkualitas');
+        $sheet->setCellValue('M1', 'Materi yang berbobot/layak');
+        $sheet->setCellValue('N1', 'Gaya komunikasi yang interaktif');
+        $sheet->setCellValue('O1', 'Saya merasa puas terhadap proses pelaksanaan kegiatan ini');
+
+        $sheet->setCellValue('P1', 'Komentar & Saran');
 
         // Proses
         foreach ($data_quiz as $nomor => $data) {
@@ -332,7 +342,6 @@ class AdminController extends Controller
 
             $sheet->setCellValue('P' . $nomor + 2, $this->getKomentar($data->anon_user) != null ? $this->getKomentar($data->anon_user)->komentar : '');
         }
-
 
         // Menyimpan perubahan kembali ke file
         $writer = new Xlsx($spreadsheet);

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Admin')
+@section('title', 'Admin - Community Empowerment')
 
 @section('content')
 
@@ -13,12 +13,12 @@
 
 <aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
-        <a href="{{route('admin.dashboard')}}" title="Admin" class="flex flex-col mb-5 items-center">
+        <a href="{{route('dashboard.index')}}" title="Admin" class="flex flex-col mb-5 items-center">
             <img src="{{asset('images/logo-cda.png')}}" class="h-24" alt="Flowbite Logo">
         </a>
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="{{route('admin.dashboard')}}" class="flex items-center p-2 text-gray-900 border border-black rounded-lg hover:bg-gray-300 group">
+                <a href="{{route('dashboard.index')}}" class="flex items-center p-2 text-gray-900 border border-black rounded-lg hover:bg-gray-300 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                         <path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
                     </svg>
@@ -37,41 +37,41 @@
                 </button>
                 <ul id="dropdown-example" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{route('admin.dosen')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('dosen.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Dosen</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.fakultas')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('fakultas.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Fakultas</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.jurusan-binaan')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('jurusan-binaan.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Jurusan</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.binaan')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('binaan.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Binaan</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.area-kampus')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('area-kampus.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Area Kampus</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.komunitas')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('komunitas.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Komunitas</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.pelatihan')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('pelatihan.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Pelatihan</a>
                     </li>
                     <li>
-                        <a href="{{route('admin.pertanyaan')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+                        <a href="{{route('pertanyaan.index')}}" class="border border-[#008ED3] flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
                             Pertanyaan</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="{{route('admin.histori-penilaian')}}" class="border border-black hover:bg-gray-300 flex items-center p-2 text-gray-900 rounded-lg group">
+                <a href="{{route('histori-penilaian.index')}}" class="border border-black hover:bg-gray-300 flex items-center p-2 text-gray-900 rounded-lg group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                         <path d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" />
                     </svg>
