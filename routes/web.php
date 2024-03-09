@@ -87,8 +87,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/pertanyaan/{id}', [\App\Http\Controllers\PertanyaanController::class, 'destroy'])->name('pertanyaan.destroy');
     Route::get('/admin/pertanyaan/search', [\App\Http\Controllers\PertanyaanController::class, 'search'])->name('pertanyaan.search');
 
+    Route::get('/admin/users', [\App\Http\Controllers\UserAuthController::class, 'index'])->name('users.index');
+    Route::post('/admin/users', [\App\Http\Controllers\UserAuthController::class, 'store'])->name('users.store');
+    Route::post('/admin/user/{id}/edit', [\App\Http\Controllers\UserAuthController::class, 'edit'])->name('users.edit');
+    Route::delete('/admin/user/{id}', [\App\Http\Controllers\UserAuthController::class, 'destroy'])->name('users.destroy');
+    Route::put('/admin/user/{id}', [\App\Http\Controllers\UserAuthController::class, 'update'])->name('users.update');
+    Route::get('/admin/users/search', [\App\Http\Controllers\UserAuthController::class, 'search'])->name('users.search');
+    Route::post('/admin/users/logout', [\App\Http\Controllers\UserAuthController::class, 'logout'])->name('users.logout');
+
     Route::get('/admin/histori-penilaian', [\App\Http\Controllers\HistoriPenilaianController::class, 'index'])->name('histori-penilaian.index');
     Route::get('/admin/histori-penilaian/search', [\App\Http\Controllers\HistoriPenilaianController::class, 'search'])->name('histori-penilaian.search');
-
-    Route::post('/logout', [\App\Http\Controllers\UserAuthController::class, 'logout'])->name('users.logout');
 });
